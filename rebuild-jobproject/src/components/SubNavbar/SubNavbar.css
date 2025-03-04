@@ -1,0 +1,17 @@
+.navfont,
+#sortFilter,
+#positionFilter,
+#trendingFilter{
+    font-family:'Kanit',sans-serif;
+    @apply font-light;
+}
+
+.navfont Link{
+    @apply font-light;
+}
+
+#sortFilter option,
+#positionFilter option,
+#trendingFilter option{
+    @apply font-extralight;
+}

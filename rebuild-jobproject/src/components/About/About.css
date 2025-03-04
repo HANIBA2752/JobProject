@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.about-img {
+    @apply w-screen h-80 object-cover object-center;
+}
+
+.about-container{
+    @apply  h-[1300px] flex flex-col items-center bg-gradient-to-b from-[#e3e6e9] via-[#e9ecef] to-[#f6f6f6];
+    /* @apply h-screen w-screen bg-[url('../src/assets/backgroundMain2.jpg')] bg-no-repeat bg-cover bg-center overflow-hidden flex items-center; */
+}
+
+.abt-title {
+    @apply dark:bg-neutral-800 dark:text-white text-white p-3 rounded-lg bg-neutral-400 w-96 h-28 text-6xl flex justify-center items-center font-semibold m-10;
+}
+
+.abt-logo {
+    @apply w-[60%] flex items-center text-left font-semibold space-x-6;
+}
+
+.abt-logo h1 {
+    @apply order-first text-2xl font-bold py-2;
+}
+
+.job-des{
+    @apply text-xl
+}
+
+.creator-title{
+    @apply  w-full text-6xl mt-32 my-10 text-neutral-700 flex justify-center items-center font-semibold;
+}
+
+/* สำหรับหน้าจอเล็ก (มือถือ) */
+@media (max-width: 640px) {
+    .abt-logo {
+        @apply w-full flex-col items-center text-center space-y-4;
+    }
+    
+    .abt-logo h1 {
+        @apply text-xl; /* ปรับขนาดตัวอักษร */
+    }
+
+    .abt-logo img {
+        @apply w-24 h-24; /* ปรับขนาดรูป */
+    }
+}
+
+/* สำหรับหน้าจอขนาดกลางและใหญ่ (แท็บเล็ต / คอม) */
+@media (min-width: 640px) {
+    .abt-logo {
+        @apply w-[60%] flex-row items-center space-x-6;
+    }
+
+    .abt-logo h1 {
+        @apply text-2xl;
+    }
+
+    .abt-logo img {
+        @apply w-72 h-72; /* ปรับขนาดรูปเมื่อหน้าจอใหญ่ */
+    }
+}

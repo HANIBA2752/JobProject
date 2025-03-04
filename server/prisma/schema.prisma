@@ -1,0 +1,51 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model job_skills {
+  id       Int     @unique(map: "job_id") @default(autoincrement())
+  job_id   Int?
+  skill_id Int?
+  score    Int?    @default(0)
+  jobs     jobs?   @relation(fields: [job_id], references: [id], onDelete: Cascade, map: "job_skills_jobs_FK")
+  skills   skills? @relation(fields: [skill_id], references: [id], onDelete: Cascade, map: "job_skills_ibfk_1")
+
+  @@index([job_id], map: "job_skills_jobs_FK")
+  @@index([skill_id], map: "job_skills_skills_FK")
+}
+
+model jobs {
+  id             Int                 @id @default(autoincrement())
+  created_at     DateTime            @default(now()) @db.DateTime(0)
+  updated_at     DateTime            @default(now()) @db.DateTime(0)
+  position_id    Int
+  trending_level jobs_trending_level
+  description    String?             @db.MediumText
+  job_skills     job_skills[]
+  position       position            @relation(fields: [position_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "jobs_ibfk_2")
+
+  @@index([position_id], map: "position_id")
+}
+
+model position {
+  id   Int    @id @unique(map: "id") @default(autoincrement())
+  name String @db.VarChar(255)
+  jobs jobs[]
+}
+
+model skills {
+  id         Int          @id @unique(map: "id") @default(autoincrement())
+  name       String       @db.VarChar(255)
+  job_skills job_skills[]
+}
+
+enum jobs_trending_level {
+  HOT
+  GROWING
+  POPULAR
+}

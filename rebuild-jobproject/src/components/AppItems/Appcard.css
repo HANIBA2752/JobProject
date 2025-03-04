@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.Appcard{
+    @apply w-[424px] h-[450px] p-6 rounded-3xl duration-500 mt-56 flex flex-col;
+}
+
+.Appcard:hover {
+    @apply scale-105 opacity-90;
+}
+
+.card-topic {
+    @apply mt-4 text-[40px] text-[#fff] leading-8 tracking-wide;
+    font-family: 'Kanit', sans-serif;
+}
+
+.card-desc{
+    @apply text-[#f9f9f9] text-lg mt-3 tracking-wide;
+    font-family: 'ubuntu',sans-serif;
+}
+
+/* .card-pc{
+    @apply -mt-48;
+} */
+
+.card-moredetails{
+    @apply text-white/50 font-medium inline-block duration-100 mt-2 ml-auto;
+}
+
+.card-moredetails:hover{
+    @apply bg-neutral-700 underline underline-offset-1 cursor-pointer;
+}

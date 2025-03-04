@@ -1,0 +1,56 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes fadeBorder {
+    0% {
+      border-bottom-color: rgba(255, 255, 255, 0); /* เริ่มต้นโปร่งใส */
+      border-bottom-width: 1px;
+      width: 0;
+    }
+    20%{
+        border-bottom-color: rgba(255, 255, 255, 0.2); /* เลือนแรก */
+        border-bottom-width: 1px;
+        width: 10%;
+    }
+    30%{
+        border-bottom-color: rgba(255, 255, 255, 0.3); /* เลือนกลาง */
+        border-bottom-width: 1px;
+        width: 25%;
+    }
+    50% {
+      border-bottom-color: rgba(255, 255, 255, 0.4); /* เลือนลาง */
+      border-bottom-width: 1px;
+      width: 50%;
+    }
+    70% {
+      border-bottom-color: rgba(255, 255, 255, 0.2); /* เลือนสุดท้าย */
+      border-bottom-width: 1px;
+      width: 75%;
+    }
+    100% {
+      border-bottom-color: rgba(255, 255, 255, 0); /* ชัดเจน */
+      border-bottom-width: 1px;
+      width: 100%;
+    }
+}
+.desc-container{ 
+    @apply w-screen;
+}
+
+.desc-bg{
+    @apply flex justify-center items-center h-20 bg-[url('https://images.pexels.com/photos/134054/pexels-photo-134054.jpeg')] bg-cover bg-bottom bg-no-repeat overflow-hidden;
+    transition: all ease-in-out;
+}   
+
+.desc-bg span{
+    @apply text-xs text-center md:text-xl text-neutral-500/80;
+    font-family: 'Kanit',sans-serif;
+}
+.animate-border{
+    position:relative;
+    border-bottom: 2px solid transparent;
+    transition: all 2s ease;
+    animation: fadeBorder 10s infinite;
+    overflow: hidden;
+}

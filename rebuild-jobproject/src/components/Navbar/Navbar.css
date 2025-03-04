@@ -1,0 +1,131 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* Main Nav -------------------------------------------------------------- */
+
+.main-nav{
+    border-bottom-width: 0.1px;
+    @apply p-1 bg-neutral-700;
+    /* @apply py-3 fixed w-full bg-[url('https://images.pexels.com/photos/316902/pexels-photo-316902.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')] bg-cover border-white border-opacity-20 backdrop-blur-sm; */
+    /* bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900  shadow-indigo-500/40 shadow-md */
+}
+
+.nav-text{
+    @apply inline-block font-light text-[10px] text-slate-200 p-1 px-2 border-2 border-transparent cursor-pointer ;
+    @apply md:text-[14px] md:ml-1;
+    font-family: 'Kanit', sans-serif;
+    transition: all 0.3s ease;
+}
+
+.nav-text:hover{
+    /* @apply hover:text-slate-200 border-gray-200; */
+    /* transform: scale(1.03); */
+    @apply bg-neutral-600/80 rounded-xl; 
+}
+
+/* LeftNavbar ----------------------------------------------------------  */
+
+.logo{
+    @apply max-w-8 max-h-8 w-auto h-auto transition-all md:max-w-10 md:max-h-10;
+    transition : all 0.3s ease;
+}
+
+.logo:hover{
+    @apply scale-105;
+    filter: drop-shadow(0 0 3px rgba(255,255,255,0.5));
+}
+
+#togglelight{
+    transition: opacity 0.3s ease;
+}
+
+
+#togglelight:hover{
+    opacity: 1;
+}
+
+/* RightNavbar ----------------------------------------------------------  */
+
+.rightnav {
+    @apply flex justify-end items-center w-32;  
+}
+
+/* .rightnav-form{
+    @apply w-[80%];
+}
+
+.rightnav-search{
+    @apply flex items-center;
+} */
+
+/* .rightnav-form input[type=text]{
+    @apply w-full h-[30px] bg-white/10 text-white border-white/40 border-[0.2px] rounded-[15px] p-2.5 text-[14px];
+    font-family: 'Ysabeau SC', sans-serif;
+    transition: all 0.2s ease;
+}
+
+.rightnav-form input[type=text]:focus{
+    @apply border-neutral-50;
+    filter: drop-shadow(0 0 3px rgba(255,255,255,0.2));
+} */
+
+/* .rightnav-search img{
+    @apply w-5 h-5 ml-2 cursor-pointer;
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 0 3px rgba(255,255,255,0.2));
+}
+
+.rightnav-search img:hover{
+    filter: drop-shadow(0 0 3px rgba(255,255,255,0.8));
+} */
+
+/* @keyframes clickSearch{
+    0%{
+        transform: scale(1);
+    }
+    50%{
+        transform: scale(0.9);
+    }
+    100%{
+        transform: scale(1);
+    }
+} */
+
+/* .animate-clickSearch {
+    animation: clickSearch 0.3s ease-in-out;
+} */
+
+.i-bulb:hover{
+    filter: drop-shadow(0px 9px 6px #ffffff);
+}
+
+.rightnav-li{
+    @apply flex items-center gap-1 pl-2;
+}
+
+.rightnav-ul{
+    @apply flex justify-around p-1  ;
+    @apply border-white/40 rounded-full border-[0.2px] gap-2;
+}
+
+
+.rightnav-lang{
+    @apply flex justify-center items-center w-20 h-auto border-neutral-400 border-[0.6px] rounded-[15px] hover:border-white duration-200 cursor-pointer; 
+}
+
+.rightnav-lang-text{
+    @apply text-sm text-white font-light;
+    font-family: 'Ysabeau SC', sans-serif;
+    filter: drop-shadow(0 0 3px rgba(255,255,255,0.5));
+}
+
+.main-nav ul{
+    @apply flex-col flex-wrap gap-0 md:flex-row md:flex-nowrap;
+}
+
+.rightnav{
+    @apply hidden md:block;
+}
+
