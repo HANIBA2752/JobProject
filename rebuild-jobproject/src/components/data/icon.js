@@ -69,7 +69,7 @@ export const iconProg = [
   },
   {
     name: "Assembly",
-    url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/assembly/assembly-original.svg",
+    url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/wasm/wasm-original.svg",
   },
   {
     name: "Ruby",
@@ -113,7 +113,7 @@ export const iconProg = [
   },
   {
     name: "Objective-C",
-    url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/objectivec/objectivec-original.svg",
+    url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/objectivec/objectivec-plain.svg",
   },
   {
     name: "Elixir",

@@ -33,7 +33,8 @@ app.get("/api/jobs", async (req, res) => {
             score: true,
             skills: {
               select: {
-                name: true
+                name: true,
+                group: true,
               }
             }
           }

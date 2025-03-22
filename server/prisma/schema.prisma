@@ -41,6 +41,7 @@ model position {
 model skills {
   id         Int          @id @unique(map: "id") @default(autoincrement())
   name       String       @db.VarChar(255)
+  group      skill_group @default(OTHER)
   job_skills job_skills[]
 }
 
@@ -48,4 +49,12 @@ enum jobs_trending_level {
   HOT
   GROWING
   POPULAR
+}
+
+enum skill_group {
+  PROGRAMMING_LANG
+  FRAMEWORK 
+  LIBRARY
+  OTHER
+
 }

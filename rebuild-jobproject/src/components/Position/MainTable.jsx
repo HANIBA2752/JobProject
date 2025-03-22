@@ -3,7 +3,14 @@ import { prePos } from "../data/pre-pos";
 import { useNavigate } from "react-router-dom";
 
 const DataTable = ({ data }) => {
-  const navigate = useNavigate();  // useNavigate hook
+  const navigate = useNavigate(); // useNavigate hook
+
+  const groupskill = {
+    PROGRAMMING_LANG: "border-blue-200 bg-blue-100 text-blue-800",
+    FRAMEWORK: "border-purple-200 bg-purple-100 text-purple-800",
+    LIBRARY: "border-green-500 bg-green-100 text-green-800",
+    OTHER: "border-neutral-500 bg-neutral-100 text-neutral-800",
+  };
 
   return data.map((row, index) => {
     let trendClass = "";
@@ -33,7 +40,9 @@ const DataTable = ({ data }) => {
           {row.position}
         </td>
         <td className="border border-neutral-300 px-4 py-2 font-light">
-          {row.skills}
+            <div className="flex space-x-2">
+            {row.skills.map(({ score, skills }) => (<span className={`${groupskill[skills.group] ?? groupskill.OTHER} border rounded-full px-3 py-1`}>{skills.name} ({(score ?? 0)}%)</span>))}
+            </div>
         </td>
         <td className="border border-neutral-300 px-4 py-2 text-center font-light">
           <span className={`${trendClass} rounded-2xl px-4 py-1 border`}>
@@ -48,8 +57,8 @@ const DataTable = ({ data }) => {
             GO
           </button>
         </td>
-                                                                                                                                                                                                                                </tr>
-                                                                                                                                                                                                                              );
+      </tr>
+    );
   });
 };
 
@@ -60,30 +69,29 @@ const MainTable = ({ currentPage, handlePageChange }) => {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const currentData = prePos.slice(startIndex, endIndex);
-  const [data, setData] = useState([])
-  
+  const [data, setData] = useState([]);
+
   async function loadJobs() {
-    const resp = await fetch(`${import.meta.env.VITE_API_URL}/api/jobs`)
-    const js = await resp.json()
-    for(const data of js){
+    const resp = await fetch(`${import.meta.env.VITE_API_URL}/api/jobs`);
+    const js = await resp.json();
+    // Reset data
+    setData([]);
+    for (const data of js) {
       const transformed = {
         id: data.id,
         position: data.position.name,
         trending: data.trending_level,
-        skills: (data.job_skills ?? []) // [{"skills": { name: "Test"}}, {"skills": { name: "Test2"}}]
-          .map((i) => i.skills.name) // ["Test", "Test2"]
-          .join(", ") // Test, Test2
-      }
-      setData((p) => ([...p, transformed]))
+        skills: data.job_skills ?? []
+      };
+      setData((p) => [...p, transformed]);
     }
   }
 
   useEffect(() => {
     return () => {
-      void loadJobs()
-    }
-  }, [])
-
+      void loadJobs();
+    };
+  }, []);
 
   return (
     <div className="w-full p-4 pr-8 overflow-x-auto">

@@ -4,7 +4,7 @@ export const learnData = [
     Website: "https://www.freecodecamp.org",
     Description:
       "FreeCodeCamp is a nonprofit organization that offers free coding tutorials, projects, and certifications for aspiring programmers.",
-    img: "https://scontent.fbkk10-1.fna.fbcdn.net/v/t39.30808-6/250929173_3179576238942422_6492034145953428513_n.png?_nc_cat=108&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeGuKYwrrVI6fnD65oekpInLLHk6YPemSr8seTpg96ZKvyfg5thzpM8vkWwA5EvrlZa65VNkjhYM4DigdvnaTf9N&_nc_ohc=1k81HadbDCwQ7kNvgEagKIm&_nc_oc=AdhLURloPhgHR9flLRi6Ok58TZWhtVq1-BzbSHuyJDi-QEHxOLzAQpPR30QAfIwUFVs&_nc_zt=23&_nc_ht=scontent.fbkk10-1.fna&_nc_gid=A5R42O6RTnjfQNNURthQl4G&oh=00_AYBi4gCrv6w0lf4fUTk1YVZeojZT_n5yOJMaNzn4nmu3tQ&oe=67BA2C99"
+    img: "https://yt3.googleusercontent.com/ytc/AIdro_lGRc-05M2OoE1ejQdxeFhyP7OkJg9h4Y-7CK_5je3QqFI=s900-c-k-c0x00ffffff-no-rj"
   },
   {
     index: "Codecademy",
@@ -67,6 +67,6 @@ export const learnData = [
     Website: "https://www.edx.org",
     Description:
       "edX is an online learning platform that provides high-quality programming courses from top universities and organizations.",
-    img: "https://scontent.fbkk14-1.fna.fbcdn.net/v/t39.30808-6/356852103_647300394105054_4031791278935114061_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeFbSwf6iTawD1bkbsVWap_oXWHXS2gMZ0FdYddLaAxnQRUYYHKJIoEh28UbUHUcNoxgSoHZ00MbDye8G0F4b6EP&_nc_ohc=tvrlL94RxuQQ7kNvgG88aK7&_nc_oc=Adj7K81IIUcuSLfCL2J_iIgnLaWxG3MY3s81yEL9gt1ZCXPVAht5FY4EvJmR56T7nEU&_nc_zt=23&_nc_ht=scontent.fbkk14-1.fna&_nc_gid=ASua_pKPvh8816CNYROow2g&oh=00_AYA-XTk91pwxPx0k2hmFeIga_WV9-GSDc2ewep5xpLihVA&oe=67BA3B40"
+    img: "https://yt3.googleusercontent.com/wtghMyEvmRZ9OSYmFjCN2Hk_4NsENwd6Kmau6k7n0in73FBvyEWpu6W4jDn8MWstLDh11FE8=s900-c-k-c0x00ffffff-no-rj"
   },
 ];
