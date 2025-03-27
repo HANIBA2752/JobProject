@@ -6,7 +6,7 @@ import "/src/components/Navbar/Navbar.css";
 
 function Navbar() {
   return (
-    <div className="main-nav flex justify-center w-screen bg-black/50 border-white border-opacity-20 backdrop-blur-sm z-10">
+    <div className="main-nav flex justify-center w-screen bg-black/80 border-white border-opacity-20 backdrop-blur-sm z-10">
       <nav className="w-[70%]">
         <ul className="flex justify-around items-center">
           <LeftNavbar />
