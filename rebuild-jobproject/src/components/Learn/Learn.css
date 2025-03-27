@@ -2,26 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+*{
+    @apply font-Ysabeau-SC
+}
 .learn-container {
-    @apply dark:bg-neutral-800 dark:text-white h-[1300px] pt-10 items-start justify-center bg-gradient-to-b from-[#e3e6e9] via-[#e9ecef] to-[#f6f6f6];
+    @apply dark:bg-neutral-900 bg-gray-50 min-h-screen pt-10;
 }
 
-.title{
-    @apply w-full text-6xl m-2 text-neutral-700 p-3
+.header-section {
+    @apply mb-8 px-4;
 }
 
-.searchbar {
-    @apply dark:bg-neutral-800 dark:text-white bg-gray-700 mt-10 justify-items-end p-3 ;
+.subtitle {
+    @apply opacity-70;
 }
 
-.animate__animated.animate__slideInUp {
-    animation-duration: 1s !important;
-}
-/* .search-box {
-    @apply p-2 w-1/6 rounded-md;
-}
-
-.search-btn{
-    @apply px-4 py-2 ml-2 bg-gray-700 text-white rounded-md hover:bg-blue-600;
-} */
-
+/* Additional custom styles can be added here if needed */
