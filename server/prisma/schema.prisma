@@ -12,24 +12,26 @@ model job_skills {
   job_id   Int?
   skill_id Int?
   score    Int?    @default(0)
-  jobs     jobs?   @relation(fields: [job_id], references: [id], onDelete: Cascade, map: "job_skills_jobs_FK")
   skills   skills? @relation(fields: [skill_id], references: [id], onDelete: Cascade, map: "job_skills_ibfk_1")
+  jobs     jobs?   @relation(fields: [job_id], references: [id], onDelete: Cascade, map: "job_skills_jobs_FK")
 
   @@index([job_id], map: "job_skills_jobs_FK")
   @@index([skill_id], map: "job_skills_skills_FK")
 }
 
 model jobs {
-  id             Int                 @id @default(autoincrement())
-  created_at     DateTime            @default(now()) @db.DateTime(0)
-  updated_at     DateTime            @default(now()) @db.DateTime(0)
+  id             Int          @id @default(autoincrement())
+  created_at     DateTime     @default(now()) @db.DateTime(0)
+  updated_at     DateTime     @default(now()) @db.DateTime(0)
   position_id    Int
-  trending_level jobs_trending_level
-  description    String?             @db.MediumText
+  trending_level Int
+  description    String?      @db.MediumText
   job_skills     job_skills[]
-  position       position            @relation(fields: [position_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "jobs_ibfk_2")
+  position       position     @relation(fields: [position_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "jobs_ibfk_2")
+  trending       trending     @relation(fields: [trending_level], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "jobs_trending_FK")
 
   @@index([position_id], map: "position_id")
+  @@index([trending_level], map: "jobs_trending_FK")
 }
 
 model position {
@@ -41,20 +43,20 @@ model position {
 model skills {
   id         Int          @id @unique(map: "id") @default(autoincrement())
   name       String       @db.VarChar(255)
-  group      skill_group @default(OTHER)
+  group      skill_group  @default(OTHER)
   job_skills job_skills[]
 }
 
-enum jobs_trending_level {
-  HOT
-  GROWING
-  POPULAR
+model trending {
+  id    Int    @id @default(autoincrement())
+  name  String @db.VarChar(100)
+  level Int    @default(0)
+  jobs  jobs[]
 }
 
 enum skill_group {
   PROGRAMMING_LANG
-  FRAMEWORK 
+  FRAMEWORK
   LIBRARY
   OTHER
-
 }

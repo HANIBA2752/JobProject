@@ -15,14 +15,14 @@ const DataTable = ({ data }) => {
   return data.map((row, index) => {
     let trendClass = "";
     switch (row.trending) {
-      case "HOT":
-        trendClass = "border-red-200 bg-red-100 text-red-800";
+      case "PEAK":
+        trendClass = "border-green-200 bg-green-100 text-green-800";
         break;
-      case "POPULAR":
+      case "AVERAGE":
         trendClass = "border-yellow-200 bg-yellow-100 text-yellow-800";
         break;
-      case "GROWING":
-        trendClass = "border-green-200 bg-green-100 text-green-800 font-light";
+      case "WEAK":
+        trendClass = "border-red-200 bg-red-100 text-red-800 font-light";
         break;
       default:
         trendClass = "border-neutral-200 bg-neutral-100 text-neutral-800";
@@ -30,17 +30,14 @@ const DataTable = ({ data }) => {
 
     return (
       <tr
-        key={row.id + index}
+        key={row.id}
         className="dark:bg-neutral-800 dark:text-white dark:hover:bg-neutral-600 hover:bg-neutral-300 text-neutral-800 transition-all duration-200"
       >
-        <td className="border border-neutral-300 px-4 py-2 font-light">
-          {row.id}
-        </td>
         <td className="border border-neutral-300 px-4 py-2 font-light">
           {row.position}
         </td>
         <td className="border border-neutral-300 px-4 py-2 font-light">
-            <div className="flex space-x-2">
+            <div className="flex space-x-2 text-sm">
             {row.skills.map(({ score, skills }) => (<span className={`${groupskill[skills.group] ?? groupskill.OTHER} border rounded-full px-3 py-1`}>{skills.name} ({(score ?? 0)}%)</span>))}
             </div>
         </td>
@@ -54,7 +51,7 @@ const DataTable = ({ data }) => {
             className="bg-neutral-100 text-neutral-800 px-4 py-2 rounded-md hover:bg-neutral-300 hover:text-neutral-900 border border-neutral-400 transition-all duration-200"
             onClick={() => navigate(`/position-info/${row.id}`)}
           >
-            GO
+            Explore
           </button>
         </td>
       </tr>
@@ -62,36 +59,14 @@ const DataTable = ({ data }) => {
   });
 };
 
-const MainTable = ({ currentPage, handlePageChange }) => {
+const MainTable = ({ currentPage, handlePageChange, data }) => {
   const itemsPerPage = 11;
   const totalItems = prePos.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const currentData = prePos.slice(startIndex, endIndex);
-  const [data, setData] = useState([]);
 
-  async function loadJobs() {
-    const resp = await fetch(`${import.meta.env.VITE_API_URL}/api/jobs`);
-    const js = await resp.json();
-    // Reset data
-    setData([]);
-    for (const data of js) {
-      const transformed = {
-        id: data.id,
-        position: data.position.name,
-        trending: data.trending_level,
-        skills: data.job_skills ?? []
-      };
-      setData((p) => [...p, transformed]);
-    }
-  }
-
-  useEffect(() => {
-    return () => {
-      void loadJobs();
-    };
-  }, []);
 
   return (
     <div className="w-full p-4 pr-8 overflow-x-auto">
@@ -108,9 +83,6 @@ const MainTable = ({ currentPage, handlePageChange }) => {
                 </th>
               </tr>
               <tr className="dark:bg-neutral-900 dark:text-white text-neutral-800">
-                <th className="border border-neutral-300 px-4 py-2 text-left font-light">
-                  No.
-                </th>
                 <th className="border border-neutral-300 px-4 py-2 text-left font-light">
                   Position
                 </th>

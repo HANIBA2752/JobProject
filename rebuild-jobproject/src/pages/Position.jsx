@@ -1,5 +1,5 @@
 // Position.js
-import React, {  useState } from "react";
+import React, {  useEffect, useState } from "react";
 import "../components/Position/pos-box.css";
 import "animate.css";
 import Filter from "../components/Position/Filter.jsx";
@@ -9,6 +9,7 @@ import { prePos } from "@/components/data/pre-pos";
 
 function Position() {
   const [currentPage, setCurrentPage] = useState(1);
+  const [data, setData] = useState([]);
   const itemsPerPage = 13;
 
   const totalItems = prePos.length;
@@ -18,16 +19,39 @@ function Position() {
     setCurrentPage(page);
     window.scrollTo(0, 0);
   };
+  async function loadJobs(sortPos = "asc", sortTrending = "asc") {
+    const resp = await fetch(`${import.meta.env.VITE_API_URL}/api/jobs?sortPos=${sortPos}&sortTrending=${sortTrending}`);
+    const js = await resp.json();
+    // Reset data
+    const result = []
+    for (const data of js) {
+      const transformed = {
+        id: data.id,
+        position: data.position.name,
+        trending: data.trending.name,
+        skills: data.job_skills ?? []
+      };
+      result.push(transformed)
+    }
+    setData(result)
+    console.log(data, result)
+  }
+  useEffect(() => {
+    return () => {
+      void loadJobs();
+    };
+  }, []);
 
   return (
     <>
       <div className="w-screen h-screen bg-[url('../src/assets/backgroundMain2.jpg')] flex justify-center">
         <div className="w-[90%] h-auto dark:bg-neutral-700 bg-neutral-100 flex flex-col md:flex-row mt-[130px] md:mt-[50px] md:mb-[60px] rounded-xl">
           {/* Sidebar Filter */}
-          <Filter />
+          <Filter onFilterUpdate={(p,t)=> loadJobs(p,t)} />
           {/* Main Table Section */}
           <div className="flex flex-col w-full">
             <MainTable
+              data={data}
               currentPage={currentPage}
               handlePageChange={handlePageChange}
             />

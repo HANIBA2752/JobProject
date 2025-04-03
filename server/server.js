@@ -10,16 +10,26 @@ app.use(express.json());
 
 // ✅ ดึงตำแหน่งงานทั้งหมด
 app.get("/api/jobs", async (req, res) => {
-  let { page = 0, size = 13 } = req.query
+  let { page = 0, size = 13 , sortPos = "asc", sortTrending = "asc"} = req.query
   if(size >= 100) size = 100
-
+  console.log(`Pos: ${sortPos} | Trending: ${sortTrending}`)
   try {
     const jobs = await prisma.jobs.findMany({
       skip: page * size,
       take: size,
+      orderBy:[{
+        position: {
+          name: sortPos
+        },
+      },
+    {
+      trending: {
+        level: sortTrending
+      }
+    }],
       select: {
         id: true,
-        trending_level: true,
+        trending: {select:{name:true}},
         created_at: true,
         updated_at: true,
         description: true,
@@ -41,7 +51,6 @@ app.get("/api/jobs", async (req, res) => {
         }
       }
     })
-    console.log(jobs)
     res.json(jobs);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -82,6 +91,11 @@ app.get("/api/jobs/:id", async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
+});
+
+app.get("/api/query/position", async (req, res) => {
+  const result = await prisma.position.findMany({ select: { id: true, name: true }})
+  res.json(result)
 });
 
 const PORT = 5000;
