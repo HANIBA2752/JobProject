@@ -14,6 +14,9 @@ module.exports = {
   				'sans-serif'
   			]
   		},
+		scale: {
+		102: '1.02',
+		},
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
