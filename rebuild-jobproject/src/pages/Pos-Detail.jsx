@@ -19,14 +19,14 @@ function PosDetail() {
 
   function getTrainingClass(value) {
     switch (value) {
-      case "HOT":
-        return "border-red-200 bg-red-100 text-red-800";
-      case "POPULAR":
-        return "border-yellow-200 bg-yellow-100 text-yellow-800";
-      case "GROWING":
-        return "border-green-200 bg-green-100 text-green-800 font-light";
-      default:
-        return "border-neutral-200 bg-neutral-100 text-neutral-800";
+    case "PEAK":
+      return "border-green-200 bg-green-100 text-green-800";
+    case "AVERAGE":
+      return "border-yellow-200 bg-yellow-100 text-yellow-800";
+    case "WEAK":
+      return "border-red-200 bg-red-100 text-red-800 font-light";
+    default:
+      return "border-neutral-200 bg-neutral-100 text-neutral-800";
     }
   }
 
@@ -54,10 +54,10 @@ function PosDetail() {
         </h1>
         <p
           className={`posDetail-trending  border px-4 py-2 rounded-full inline-block ${getTrainingClass(
-            desdata.trending_level
+            desdata.trending.name
           )}`}
         >
-          {desdata.trending_level}
+          {desdata.trending.name}
         </p>
       </div>
 

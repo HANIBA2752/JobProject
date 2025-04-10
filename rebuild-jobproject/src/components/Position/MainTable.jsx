@@ -36,12 +36,29 @@ const DataTable = ({ data }) => {
         <td className="border border-neutral-300 px-4 py-2 font-light">
           {row.position}
         </td>
-        <td className="border border-neutral-300 px-4 py-2 font-light">
-            <div className="flex space-x-2 text-sm">
-            {row.skills.map(({ score, skills }) => (<span className={`${groupskill[skills.group] ?? groupskill.OTHER} border rounded-full px-3 py-1`}>{skills.name} ({(score ?? 0)}%)</span>))}
-            </div>
+        <td className="border border-neutral-300 py-2 font-light">
+          <div className="pl-2 space-y-2 text-sm">
+            {Array.from({ length: Math.ceil(row.skills.length / 5) }).map(
+              (_, rowIndex) => (
+                <div key={rowIndex} className="flex space-x-2 flex-wrap">
+                  {row.skills
+                    .slice(rowIndex * 5, rowIndex * 5 + 5)
+                    .map(({ score, skills }, idx) => (
+                      <div
+                        key={idx}
+                        className={`${
+                          groupskill[skills.group] ?? groupskill.OTHER
+                        } border rounded-full text-sm py-1 px-3`}
+                      >
+                        {skills.name} ({score ?? 0}%)
+                      </div>
+                    ))}
+                </div>
+              )
+            )}
+          </div>
         </td>
-        <td className="border border-neutral-300 px-4 py-2 text-center font-light">
+        <td className="border border-neutral-300 px-4 py-2 text-center font-light text-sm">
           <span className={`${trendClass} rounded-2xl px-4 py-1 border`}>
             {row.trending}
           </span>
@@ -66,7 +83,6 @@ const MainTable = ({ currentPage, handlePageChange, data }) => {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const currentData = prePos.slice(startIndex, endIndex);
-
 
   return (
     <div className="w-full p-4 pr-8 overflow-x-auto">

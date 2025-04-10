@@ -19,8 +19,8 @@ function Position() {
     setCurrentPage(page);
     window.scrollTo(0, 0);
   };
-  async function loadJobs(sortPos = "asc", sortTrending = "asc") {
-    const resp = await fetch(`${import.meta.env.VITE_API_URL}/api/jobs?sortPos=${sortPos}&sortTrending=${sortTrending}`);
+  async function loadJobs(sortPos = "asc", sortTrending = "asc", groupOfPos = []) {
+    const resp = await fetch(`${import.meta.env.VITE_API_URL}/api/jobs?sortPos=${sortPos}&sortTrending=${sortTrending}&groupOfPos=${groupOfPos}`);
     const js = await resp.json();
     // Reset data
     const result = []
@@ -34,7 +34,7 @@ function Position() {
       result.push(transformed)
     }
     setData(result)
-    console.log(data, result)
+    // console.log(data, result)
   }
   useEffect(() => {
     return () => {
@@ -47,7 +47,7 @@ function Position() {
       <div className="w-screen h-screen bg-[url('../src/assets/backgroundMain2.jpg')] flex justify-center">
         <div className="w-[90%] h-auto dark:bg-neutral-700 bg-neutral-100 flex flex-col md:flex-row mt-[130px] md:mt-[50px] md:mb-[60px] rounded-xl">
           {/* Sidebar Filter */}
-          <Filter onFilterUpdate={(p,t)=> loadJobs(p,t)} />
+          <Filter onFilterUpdate={(p,t,gid)=> loadJobs(p,t,gid)} />
           {/* Main Table Section */}
           <div className="flex flex-col w-full">
             <MainTable

@@ -35,9 +35,13 @@ model jobs {
 }
 
 model position {
-  id   Int    @id @unique(map: "id") @default(autoincrement())
-  name String @db.VarChar(255)
-  jobs jobs[]
+  id             Int             @id @unique(map: "id") @default(autoincrement())
+  name           String          @db.VarChar(255)
+  group_id       Int?
+  jobs           jobs[]
+  position_group position_group? @relation(fields: [group_id], references: [id], onDelete: Restrict, map: "position_position_group_FK")
+
+  @@index([group_id], map: "position_position_group_FK")
 }
 
 model skills {
@@ -54,9 +58,17 @@ model trending {
   jobs  jobs[]
 }
 
+model position_group {
+  id       Int        @id @default(autoincrement())
+  name     String     @db.VarChar(255)
+  position position[]
+}
+
 enum skill_group {
   PROGRAMMING_LANG
   FRAMEWORK
   LIBRARY
   OTHER
 }
+
+

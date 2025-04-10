@@ -8,53 +8,85 @@ const prisma = new PrismaClient();
 app.use(cors());
 app.use(express.json());
 
+/**
+ * [GET] /api/jobs (Query all jobs) ✅
+ * [GET] /api/jobs/:id (Query info job) ✅
+ * [GET] /api/query/position (Get all position [FOR SEARCH]) ✅
+ * [GET] /api/query/position-group (Get all position group) ✅
+ *
+ */
+
 // ✅ ดึงตำแหน่งงานทั้งหมด
 app.get("/api/jobs", async (req, res) => {
-  let { page = 0, size = 13 , sortPos = "asc", sortTrending = "asc"} = req.query
-  if(size >= 100) size = 100
-  console.log(`Pos: ${sortPos} | Trending: ${sortTrending}`)
-  try {
-    const jobs = await prisma.jobs.findMany({
-      skip: page * size,
-      take: size,
-      orderBy:[{
+  let {
+    page = 0,
+    size = 13,
+    sortPos = "asc",
+    sortTrending = "asc",
+    groupOfPos = "",
+  } = req.query;
+  if (size >= 100) size = 100;
+  console.log(
+    `Pos: ${sortPos} | Trending: ${sortTrending} | Group pos IDS: ${groupOfPos}`
+  );
+
+  // Transform data group
+  // 0,1,2,3,4 => ['0','1','2','3','4'] => [0,1,2,3,4] => [1,2,3,4]
+  const groupIds = groupOfPos // 0,1,2,3,4
+    .split(",") // ['0','1','2','3','4']
+    .map((i) => Number(i)) //  [0,1,2,3,4]
+    .filter((i) => i > 0); // [1,2,3,4]
+
+  const jobs = await prisma.jobs.findMany({
+    skip: page * size,
+    take: size,
+    orderBy: [
+      {
         position: {
-          name: sortPos
+          name: sortPos,
         },
       },
-    {
-      trending: {
-        level: sortTrending
-      }
-    }],
-      select: {
-        id: true,
-        trending: {select:{name:true}},
-        created_at: true,
-        updated_at: true,
-        description: true,
-        position: {
-          select: {
-            name: true
-          }
+      {
+        trending: {
+          level: sortTrending,
         },
-        job_skills: {
-          select: {
-            score: true,
-            skills: {
-              select: {
-                name: true,
-                group: true,
-              }
-            }
+      },
+    ],
+    where:
+      groupIds.length > 0
+        ? {
+            position: {
+              group_id: {
+                in: groupIds,
+              },
+            },
           }
-        }
-      }
-    })
-    res.json(jobs);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+        : undefined,
+    select: {
+      id: true,
+      trending: { select: { name: true } },
+      created_at: true,
+      updated_at: true,
+      description: true,
+      position: {
+        select: {
+          name: true,
+        },
+      },
+      job_skills: {
+        select: {
+          score: true,
+          skills: {
+            select: {
+              name: true,
+              group: true,
+            },
+          },
+        },
+      },
+    },
+  });
+  res.json(jobs);
 });
 
 // ✅ ดึงข้อมูลตำแหน่งงานเฉพาะ ID
@@ -65,26 +97,26 @@ app.get("/api/jobs/:id", async (req, res) => {
       where: { id: parseInt(id) },
       select: {
         id: true,
-        trending_level: true,
+        trending: { select: { name: true } },
         created_at: true,
         updated_at: true,
         description: true,
         position: {
           select: {
-            name: true
-          }
+            name: true,
+          },
         },
         job_skills: {
           select: {
             score: true,
             skills: {
               select: {
-                name: true
-              }
-            }
-          }
-        }
-      }
+                name: true,
+              },
+            },
+          },
+        },
+      },
     });
     if (!job) return res.status(404).json({ message: "Job not found" });
     res.json(job);
@@ -94,8 +126,17 @@ app.get("/api/jobs/:id", async (req, res) => {
 });
 
 app.get("/api/query/position", async (req, res) => {
-  const result = await prisma.position.findMany({ select: { id: true, name: true }})
-  res.json(result)
+  const result = await prisma.position.findMany({
+    select: { id: true, name: true },
+  });
+  res.json(result);
+});
+
+app.get("/api/query/position-group", async (req, res) => {
+  const result = await prisma.position_group.findMany({
+    select: { id: true, name: true },
+  });
+  res.json(result);
 });
 
 const PORT = 5000;
