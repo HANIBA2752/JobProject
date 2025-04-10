@@ -2,130 +2,158 @@
 @tailwind components;
 @tailwind utilities;
 
-
-/* Main Nav -------------------------------------------------------------- */
-
-.main-nav{
-    border-bottom-width: 0.1px;
-    @apply p-1 bg-neutral-700;
-    /* @apply py-3 fixed w-full bg-[url('https://images.pexels.com/photos/316902/pexels-photo-316902.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')] bg-cover border-white border-opacity-20 backdrop-blur-sm; */
-    /* bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900  shadow-indigo-500/40 shadow-md */
+/* ========== Base Navbar Styling ========== */
+.navbar-container {
+  @apply fixed top-0 left-0 w-full bg-neutral-800 bg-opacity-90 backdrop-blur-sm z-50 border-b border-white border-opacity-10;
 }
 
-.nav-text{
-    @apply inline-block font-light text-[10px] text-slate-200 p-1 px-2 border-2 border-transparent cursor-pointer ;
-    @apply md:text-[14px] md:ml-1;
-    font-family: 'Kanit', sans-serif;
-    transition: all 0.3s ease;
+.navbar-wrapper {
+  @apply relative flex flex-col px-4 py-2 mx-auto max-w-7xl;
+  @apply md:flex-row md:items-center md:justify-between md:px-6;
 }
 
-.nav-text:hover{
-    /* @apply hover:text-slate-200 border-gray-200; */
-    /* transform: scale(1.03); */
-    @apply bg-neutral-600/80 rounded-xl; 
+/* ========== Logo Styling ========== */
+.navbar-top {
+  @apply flex items-center justify-between w-full;
+  @apply md:w-auto;
 }
 
-/* LeftNavbar ----------------------------------------------------------  */
-
-.logo{
-    @apply max-w-8 max-h-8 w-auto h-auto transition-all md:max-w-10 md:max-h-10;
-    transition : all 0.3s ease;
+.navbar-logo {
+  @apply flex items-center;
 }
 
-.logo:hover{
-    @apply scale-105;
-    filter: drop-shadow(0 0 3px rgba(255,255,255,0.5));
+.logo {
+  @apply h-8 w-auto transition-all duration-300 ease-in-out;
+  @apply md:h-10;
 }
 
-#togglelight{
-    transition: opacity 0.3s ease;
+.logo:hover {
+  @apply scale-105;
+  filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.5));
 }
 
-
-#togglelight:hover{
-    opacity: 1;
+/* ========== Mobile Toggle Button ========== */
+.mobile-menu-toggle {
+  @apply flex md:hidden text-white text-xl cursor-pointer p-2 rounded-full transition-all;
+  @apply hover:bg-neutral-700;
 }
 
-/* RightNavbar ----------------------------------------------------------  */
-
-.rightnav {
-    @apply flex justify-end items-center w-32;  
+/* ========== Mobile Menu ========== */
+.mobile-menu {
+  @apply hidden flex-col w-full mt-4 pb-3 overflow-hidden;
+  @apply md:hidden;
 }
 
-/* .rightnav-form{
-    @apply w-[80%];
+.mobile-menu.open {
+  @apply flex;
 }
 
-.rightnav-search{
-    @apply flex items-center;
-} */
-
-/* .rightnav-form input[type=text]{
-    @apply w-full h-[30px] bg-white/10 text-white border-white/40 border-[0.2px] rounded-[15px] p-2.5 text-[14px];
-    font-family: 'Ysabeau SC', sans-serif;
-    transition: all 0.2s ease;
+.mobile-nav {
+  @apply flex flex-col items-center space-y-2;
 }
 
-.rightnav-form input[type=text]:focus{
-    @apply border-neutral-50;
-    filter: drop-shadow(0 0 3px rgba(255,255,255,0.2));
-} */
-
-/* .rightnav-search img{
-    @apply w-5 h-5 ml-2 cursor-pointer;
-    transition: all 0.3s ease;
-    filter: drop-shadow(0 0 3px rgba(255,255,255,0.2));
+.mobile-link {
+  @apply block w-full py-2 px-4 text-center text-white font-medium tracking-wide rounded-lg transition-all duration-300;
+  @apply bg-neutral-700/50 hover:bg-neutral-600 hover:shadow hover:scale-102;
+  font-family: 'Kanit', sans-serif;
+  transform-origin: center;
+  font-size: 0.9rem;
 }
 
-.rightnav-search img:hover{
-    filter: drop-shadow(0 0 3px rgba(255,255,255,0.8));
-} */
-
-/* @keyframes clickSearch{
-    0%{
-        transform: scale(1);
-    }
-    50%{
-        transform: scale(0.9);
-    }
-    100%{
-        transform: scale(1);
-    }
-} */
-
-/* .animate-clickSearch {
-    animation: clickSearch 0.3s ease-in-out;
-} */
-
-.i-bulb:hover{
-    filter: drop-shadow(0px 9px 6px #ffffff);
+.mobile-settings {
+  @apply mt-4 flex flex-col items-center space-y-2;
 }
 
-.rightnav-li{
-    @apply flex items-center gap-1 pl-2;
+.mobile-theme-toggle, 
+.mobile-language {
+  @apply flex items-center justify-center space-x-2 py-2 px-4 rounded-lg bg-neutral-700/70 text-white cursor-pointer transition-all duration-300;
+  @apply hover:bg-neutral-600 hover:shadow hover:scale-102;
 }
 
-.rightnav-ul{
-    @apply flex justify-around p-1  ;
-    @apply border-white/40 rounded-full border-[0.2px] gap-2;
+.mobile-theme-toggle span, 
+.mobile-language span {
+  @apply text-xs font-medium;
 }
 
-
-.rightnav-lang{
-    @apply flex justify-center items-center w-20 h-auto border-neutral-400 border-[0.6px] rounded-[15px] hover:border-white duration-200 cursor-pointer; 
+/* ========== Desktop Navigation ========== */
+.desktop-nav {
+  @apply hidden md:flex items-center justify-center flex-1;
 }
 
-.rightnav-lang-text{
-    @apply text-sm text-white font-light;
-    font-family: 'Ysabeau SC', sans-serif;
-    filter: drop-shadow(0 0 3px rgba(255,255,255,0.5));
+.desktop-nav ul {
+  @apply flex items-center space-x-1;
 }
 
-.main-nav ul{
-    @apply flex-col flex-wrap gap-0 md:flex-row md:flex-nowrap;
+.nav-link {
+  @apply block;
 }
 
-.rightnav{
-    @apply hidden md:block;
+.nav-text {
+  @apply inline-block font-light text-sm text-slate-200 px-3 py-2 rounded-xl transition-all duration-300;
+  @apply hover:bg-neutral-700 hover:text-white;
+  font-family: 'Kanit', sans-serif;
 }
 
+/* ========== Desktop Settings ========== */
+.desktop-settings {
+  @apply hidden md:flex items-center space-x-2;
+}
+
+.theme-toggle {
+  @apply p-2 cursor-pointer text-lg rounded-full transition-all hover:bg-neutral-700;
+}
+
+.theme-icon {
+  @apply text-gray-400;
+}
+
+.theme-icon.active {
+  @apply text-yellow-400;
+}
+
+.language-selector {
+  @apply px-3 py-1.5 text-sm rounded-full border border-white border-opacity-20 cursor-pointer transition-all;
+  @apply hover:bg-neutral-700 text-white;
+  font-family: 'Kanit', sans-serif;
+}
+
+/* ========== Dark Mode ========== */
+.dark body {
+  @apply bg-neutral-900 text-white;
+}
+
+/* ========== Animations ========== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+  from { transform: translateX(-10px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+.mobile-menu.open {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.mobile-menu.open .mobile-link {
+  animation: slideIn 0.4s ease-out backwards;
+}
+
+.mobile-menu.open .mobile-link:nth-child(1) { animation-delay: 0.05s; }
+.mobile-menu.open .mobile-link:nth-child(2) { animation-delay: 0.1s; }
+.mobile-menu.open .mobile-link:nth-child(3) { animation-delay: 0.15s; }
+.mobile-menu.open .mobile-link:nth-child(4) { animation-delay: 0.2s; }
+
+.mobile-menu.open .mobile-settings > * {
+  animation: slideIn 0.4s ease-out backwards;
+}
+
+.mobile-menu.open .mobile-theme-toggle { animation-delay: 0.25s; }
+.mobile-menu.open .mobile-language { animation-delay: 0.3s; }
+
+/* Add glass effect to mobile menu */
+.mobile-menu.open {
+  @apply bg-neutral-800/30 backdrop-blur-md rounded-lg px-3 py-2 border border-white/5;
+}
