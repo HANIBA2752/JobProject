@@ -6,7 +6,7 @@
     @apply font-Ysabeau-SC
 }
 .learn-container {
-    @apply dark:bg-neutral-900 bg-gray-50 min-h-screen pt-10;
+    @apply dark:bg-neutral-900 bg-gray-50 min-h-screen pt-10 mt-[30px] md:mt-[50px];
 }
 
 .header-section {
