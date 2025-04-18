@@ -16,7 +16,6 @@ const App = () => {
       <AppBox />
       <DescApp />
       <Promote />
-      <Footer />
     </div>
   );
 };

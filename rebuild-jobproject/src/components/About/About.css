@@ -2,61 +2,204 @@
 @tailwind components;
 @tailwind utilities;
 
-.about-img {
-    @apply w-screen h-80 object-cover object-center;
+/* Hero Section */
+.about-page {
+  @apply w-full overflow-x-hidden;
 }
 
-.about-container{
-    @apply  h-[1300px] flex flex-col items-center bg-gradient-to-b from-[#e3e6e9] via-[#e9ecef] to-[#f6f6f6];
-    /* @apply h-screen w-screen bg-[url('../src/assets/backgroundMain2.jpg')] bg-no-repeat bg-cover bg-center overflow-hidden flex items-center; */
+.hero-section {
+  @apply w-full h-[500px] relative bg-fixed bg-center bg-cover;
+  background-image: url('https://images.pexels.com/photos/6804068/pexels-photo-6804068.jpeg');
 }
 
-.abt-title {
-    @apply dark:bg-neutral-800 dark:text-white text-white p-3 rounded-lg bg-neutral-400 w-96 h-28 text-6xl flex justify-center items-center font-semibold m-10;
+.hero-overlay {
+  @apply absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-50 text-white p-6;
 }
 
-.abt-logo {
-    @apply w-[60%] flex items-center text-left font-semibold space-x-6;
+.hero-title {
+  @apply text-6xl md:text-7xl font-bold mb-4 text-center;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
 }
 
-.abt-logo h1 {
-    @apply order-first text-2xl font-bold py-2;
+.hero-subtitle {
+  @apply text-xl md:text-2xl max-w-2xl text-center;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
 }
 
-.job-des{
-    @apply text-xl
+/* Mission Section */
+.mission-section {
+  @apply py-20 px-4 bg-gradient-to-b from-gray-100 to-white dark:from-neutral-900 dark:to-neutral-800;
 }
 
-.creator-title{
-    @apply  w-full text-6xl mt-32 my-10 text-neutral-700 flex justify-center items-center font-semibold;
+.mission-content {
+  @apply container mx-auto flex flex-col lg:flex-row items-center gap-12;
 }
 
-/* สำหรับหน้าจอเล็ก (มือถือ) */
+.mission-image {
+  @apply w-full lg:w-1/3 flex justify-center;
+}
+
+.mission-image img {
+  @apply w-56 md:w-72 lg:w-80 h-auto rounded-xl shadow-lg transition-transform duration-300;
+}
+
+.mission-image img:hover {
+  @apply transform scale-105;
+}
+
+.mission-text {
+  @apply w-full lg:w-2/3;
+}
+
+.section-title {
+  @apply text-4xl md:text-5xl font-bold mb-6 text-neutral-800 dark:text-white;
+  position: relative;
+  padding-bottom: 15px;
+}
+
+.section-title::after {
+  content: '';
+  @apply absolute bottom-0 left-0 w-24 h-1 bg-blue-500;
+}
+
+.mission-description {
+  @apply text-lg md:text-xl mb-12 text-neutral-700 dark:text-neutral-300 leading-relaxed;
+}
+
+/* Feature Cards */
+.feature-cards {
+  @apply grid grid-cols-1 md:grid-cols-3 gap-6 mt-10;
+}
+
+.feature-card {
+  @apply bg-white dark:bg-neutral-700 p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl flex flex-col items-center text-center;
+}
+
+.feature-icon {
+  @apply mb-4;
+}
+
+.feature-title {
+  @apply text-xl font-semibold mb-2 text-neutral-800 dark:text-white;
+}
+
+.feature-description {
+  @apply text-neutral-600 dark:text-neutral-300;
+}
+
+/* Team Section */
+.team-section {
+  @apply py-20 px-4 bg-neutral-50 dark:bg-neutral-900;
+}
+
+.team-title {
+  @apply text-4xl md:text-5xl font-bold text-center mb-2 text-neutral-800 dark:text-white;
+}
+
+.team-description {
+  @apply text-center mb-16 text-neutral-600 dark:text-neutral-400;
+}
+
+.team-grid {
+  @apply container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center;
+}
+
+.team-card-wrapper {
+  @apply w-full;
+  perspective: 1000px;
+}
+
+.team-card-wrapper:hover .card {
+  @apply shadow-2xl;
+  transform: translateY(-10px);
+}
+
+/* Testimonial Section */
+.testimonial-section {
+  @apply py-16 px-4 bg-blue-50 dark:bg-neutral-800;
+}
+
+.testimonial-container {
+  @apply container mx-auto max-w-4xl;
+}
+
+.testimonial-title {
+  @apply text-3xl md:text-4xl font-bold text-center mb-10 text-neutral-800 dark:text-white;
+}
+
+.testimonial-card {
+  @apply bg-white dark:bg-neutral-700 p-8 rounded-xl shadow-lg text-center;
+}
+
+.testimonial-quote {
+  @apply text-xl md:text-2xl italic mb-6 text-neutral-700 dark:text-white;
+}
+
+.testimonial-author {
+  @apply text-lg font-semibold text-blue-600 dark:text-blue-400;
+}
+
+/* Thank You Section */
+.thank-you-section {
+  @apply py-20 px-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white text-center;
+}
+
+.thank-you-text {
+  @apply text-3xl md:text-4xl font-bold mb-4;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.contact-prompt {
+  @apply text-lg opacity-90;
+}
+
+/* Responsive adjustments */
 @media (max-width: 640px) {
-    .abt-logo {
-        @apply w-full flex-col items-center text-center space-y-4;
-    }
-    
-    .abt-logo h1 {
-        @apply text-xl; /* ปรับขนาดตัวอักษร */
-    }
-
-    .abt-logo img {
-        @apply w-24 h-24; /* ปรับขนาดรูป */
-    }
+  .hero-title {
+    @apply text-4xl;
+  }
+  
+  .hero-subtitle {
+    @apply text-lg;
+  }
+  
+  .feature-cards {
+    @apply grid-cols-1 gap-8;
+  }
+  
+  .mission-image img {
+    @apply w-48;
+  }
 }
 
-/* สำหรับหน้าจอขนาดกลางและใหญ่ (แท็บเล็ต / คอม) */
-@media (min-width: 640px) {
-    .abt-logo {
-        @apply w-[60%] flex-row items-center space-x-6;
-    }
+@media (min-width: 641px) and (max-width: 1024px) {
+  .hero-section {
+    @apply h-[400px];
+  }
+  
+  .feature-cards {
+    @apply grid-cols-2 gap-6;
+  }
+}
 
-    .abt-logo h1 {
-        @apply text-2xl;
-    }
+/* Dark mode enhancements */
+.dark .card {
+  @apply bg-neutral-800 border border-neutral-700;
+}
 
-    .abt-logo img {
-        @apply w-72 h-72; /* ปรับขนาดรูปเมื่อหน้าจอใหญ่ */
-    }
+.dark .feature-card {
+  @apply border border-neutral-600;
+}
+
+/* TeamCard enhancements */
+.card {
+  @apply transform transition-all duration-300 hover:shadow-xl;
+}
+
+.card img {
+  @apply transition-all duration-300;
+}
+
+.card:hover img {
+  @apply transform scale-105;
 }
