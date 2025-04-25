@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { prePos } from "../data/pre-pos";
 import { useNavigate } from "react-router-dom";
+import { ArrowDown } from "lucide-react"
 
 const DataTable = ({ data }) => {
   const navigate = useNavigate(); // useNavigate hook
@@ -76,7 +77,7 @@ const DataTable = ({ data }) => {
   });
 };
 
-const MainTable = ({ currentPage, handlePageChange, data }) => {
+const MainTable = ({ currentPage, handlePageChange, data, trendingSort, onTrendingSortToggle }) => {
   const itemsPerPage = 11;
   const totalItems = prePos.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
@@ -105,8 +106,13 @@ const MainTable = ({ currentPage, handlePageChange, data }) => {
                 <th className="border border-neutral-300 px-4 py-2 text-left font-light">
                   Mostly Skills Requirement
                 </th>
-                <th className="border border-neutral-300 px-4 py-2 text-center font-light">
-                  Trending
+                <th className="border border-neutral-300 px-4 py-2 text-center font-light relative">
+                  <span>Trending</span>
+                  
+                  {/* Trending sort */}
+                  <button onClick={() => onTrendingSortToggle()} className={`absolute right-3 top-3 duration-300 ${trendingSort === "desc" ? "rotate-180" : 'rotate-0'}`}>
+                    <ArrowDown size={18} />
+                  </button>
                 </th>
                 <th className="border border-neutral-300 px-4 py-2 text-center font-light">
                   Action

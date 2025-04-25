@@ -48,7 +48,7 @@ function PosDetail() {
 
   return (
     <div className="posDetail-container">
-      <div className="posDetail-header">
+      <div className="posDetail-header pt-8">
         <h1 className="posDetail-title animate__animated animate__zoomIn">
           {desdata.position?.name}
         </h1>

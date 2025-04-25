@@ -1,5 +1,5 @@
 // Position.js
-import React, {  useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../components/Position/pos-box.css";
 import "animate.css";
 import Filter from "../components/Position/Filter.jsx";
@@ -10,30 +10,44 @@ import { prePos } from "@/components/data/pre-pos";
 function Position() {
   const [currentPage, setCurrentPage] = useState(1);
   const [data, setData] = useState([]);
-  const itemsPerPage = 13;
+  const [filter, setFilter] = useState({
+    is_updated: false,
+    positionSort: "asc",
+    trendingSort: "desc",
+    positionGroupIds: [],
+    searchQuery: "",
+  });
 
-  const totalItems = prePos.length;
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  // Pagination
+  const [page, setPage] = useState(0)
+  const [pageTotal, setPageTotal] = useState(0)
 
   const handlePageChange = (page) => {
-    setCurrentPage(page);
+    setPage(page);
     window.scrollTo(0, 0);
   };
-  async function loadJobs(sortPos = "asc", sortTrending = "asc", groupOfPos = []) {
-    const resp = await fetch(`${import.meta.env.VITE_API_URL}/api/jobs?sortPos=${sortPos}&sortTrending=${sortTrending}&groupOfPos=${groupOfPos}`);
+  async function loadJobs() {
+    const resp = await fetch(
+      `${import.meta.env.VITE_API_URL}/api/jobs?sortPos=${
+        filter.positionSort
+      }&sortTrending=${filter.trendingSort}&groupOfPos=${
+        filter.positionGroupIds
+      }&search=${filter.searchQuery}&page=${page}`
+    );
     const js = await resp.json();
+    setPageTotal(js.pagination.pageTotal)
     // Reset data
-    const result = []
-    for (const data of js) {
+    const result = [];
+    for (const data of js.items ?? []) {
       const transformed = {
         id: data.id,
         position: data.position.name,
         trending: data.trending.name,
-        skills: data.job_skills ?? []
+        skills: data.job_skills ?? [],
       };
-      result.push(transformed)
+      result.push(transformed);
     }
-    setData(result)
+    setData(result);
     // console.log(data, result)
   }
   useEffect(() => {
@@ -42,23 +56,45 @@ function Position() {
     };
   }, []);
 
+  useEffect(() => {
+    if (filter.is_updated) {
+      void loadJobs();
+    }
+  }, [filter, page]);
+
   return (
     <>
       <div className="w-screen h-screen bg-[url('../src/assets/backgroundMain2.jpg')] flex justify-center">
         <div className="w-[90%] h-auto dark:bg-neutral-700 bg-neutral-100 flex flex-col md:flex-row mt-[70px] mb-[20px] md:mt-[80px] md:mb-[60px] rounded-xl">
           {/* Sidebar Filter */}
-          <Filter onFilterUpdate={(p,t,gid)=> loadJobs(p,t,gid)} />
+          <Filter
+            onFilterUpdate={(data) => {
+              setFilter((p) => ({
+                ...data,
+                trendingSort: p.trendingSort,
+                is_updated: true,
+              }));
+            }}
+          />
           {/* Main Table Section */}
           <div className="flex flex-col w-full">
             <MainTable
+              // Sort tredning function
+              onTrendingSortToggle={() => {
+                setFilter((p) => ({
+                  ...p,
+                  trendingSort: p.trendingSort === "asc" ? "desc" : "asc",
+                }));
+              }}
+              trendingSort={filter.trendingSort}
               data={data}
-              currentPage={currentPage}
+              currentPage={page}
               handlePageChange={handlePageChange}
             />
             {/* Pagination */}
             <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
+              currentPage={page}
+              totalPages={pageTotal}
               handlePageChange={handlePageChange}
             />
           </div>

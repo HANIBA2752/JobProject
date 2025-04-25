@@ -21,13 +21,13 @@ app.get("/api/jobs", async (req, res) => {
   let {
     page = 0,
     size = 13,
-    sortPos = "asc",
     sortTrending = "asc",
     groupOfPos = "",
+    search = "",
   } = req.query;
   if (size >= 100) size = 100;
   console.log(
-    `Pos: ${sortPos} | Trending: ${sortTrending} | Group pos IDS: ${groupOfPos}`
+    `Trending: ${sortTrending} | Group pos IDS: ${groupOfPos}`
   );
 
   // Transform data group
@@ -37,31 +37,59 @@ app.get("/api/jobs", async (req, res) => {
     .map((i) => Number(i)) //  [0,1,2,3,4]
     .filter((i) => i > 0); // [1,2,3,4]
 
+  const queryBase = {
+    ...(groupIds.length > 0
+      ? {
+          position: {
+            group_id: {
+              in: groupIds,
+            },
+          },
+        }
+      : {}),
+  };
+
+  const whereQuery = {
+    ...(search != ""
+      ? {
+          OR: [
+            {
+              position: {
+                name: {
+                  contains: search,
+                  
+                },
+              },
+              ...queryBase,
+            },
+            {
+              job_skills: {
+                some: {
+                  skills: {
+                    name: {
+                      contains: `%${search}%`,
+                    },
+                  },
+                },
+              },
+              ...queryBase,
+            },
+          ],
+        }
+      : {
+          ...queryBase,
+        }),
+  }
+
   const jobs = await prisma.jobs.findMany({
     skip: page * size,
     take: size,
-    orderBy: [
-      {
-        position: {
-          name: sortPos,
-        },
-      },
-      {
-        trending: {
-          level: sortTrending,
-        },
-      },
-    ],
-    where:
-      groupIds.length > 0
-        ? {
-            position: {
-              group_id: {
-                in: groupIds,
-              },
-            },
-          }
-        : undefined,
+    orderBy: {
+      trending: {
+        level: sortTrending
+      }
+    },
+    where: whereQuery,
     select: {
       id: true,
       trending: { select: { name: true } },
@@ -70,7 +98,7 @@ app.get("/api/jobs", async (req, res) => {
       description: true,
       position: {
         select: {
-          name: true,
+          name: "",
         },
       },
       job_skills: {
@@ -86,7 +114,18 @@ app.get("/api/jobs", async (req, res) => {
       },
     },
   });
-  res.json(jobs);
+  // Get total job query
+  const totalData = await prisma.jobs.count({
+    where: whereQuery
+  })
+
+  res.json({
+    items: jobs,
+    pagination: {
+      total: totalData,
+      pageTotal: Math.trunc(totalData / size)
+    }
+  });
 });
 
 // ✅ ดึงข้อมูลตำแหน่งงานเฉพาะ ID
