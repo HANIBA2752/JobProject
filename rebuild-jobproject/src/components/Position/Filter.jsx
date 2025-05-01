@@ -74,7 +74,7 @@ function Filter({ onFilterUpdate }) {
         </divdivdiv>
       </div>
 
-      {/* Position Filter */}
+      {/* Position Filter
       <div className="flex flex-col space-y-2">
         <h3 className="dark:text-white text-neutral-600 text-sm font-medium mb-2">
           Position
@@ -88,7 +88,7 @@ function Filter({ onFilterUpdate }) {
           <option value="asc">A-Z</option>
           <option value="desc">Z-A</option>
         </select>
-      </div>
+      </div> */}
 
       {/* Checkbox Filter */}
       <h3 className="dark:text-white text-neutral-600 text-sm font-medium mb-2">

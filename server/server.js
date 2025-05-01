@@ -24,11 +24,10 @@ app.get("/api/jobs", async (req, res) => {
     sortTrending = "asc",
     groupOfPos = "",
     search = "",
+    language = "",
   } = req.query;
   if (size >= 100) size = 100;
-  console.log(
-    `Trending: ${sortTrending} | Group pos IDS: ${groupOfPos}`
-  );
+  console.log(`Trending: ${sortTrending} | Group pos IDS: ${groupOfPos}`);
 
   // Transform data group
   // 0,1,2,3,4 => ['0','1','2','3','4'] => [0,1,2,3,4] => [1,2,3,4]
@@ -47,6 +46,15 @@ app.get("/api/jobs", async (req, res) => {
           },
         }
       : {}),
+    ...(language != ""
+      ? {
+          job_skills: {
+            some: {
+              skill_id: Number(language),
+            },
+          },
+        }
+      : {}),
   };
 
   const whereQuery = {
@@ -57,7 +65,6 @@ app.get("/api/jobs", async (req, res) => {
               position: {
                 name: {
                   contains: search,
-                  
                 },
               },
               ...queryBase,
@@ -79,15 +86,15 @@ app.get("/api/jobs", async (req, res) => {
       : {
           ...queryBase,
         }),
-  }
+  };
 
   const jobs = await prisma.jobs.findMany({
     skip: page * size,
     take: size,
     orderBy: {
       trending: {
-        level: sortTrending
-      }
+        level: sortTrending,
+      },
     },
     where: whereQuery,
     select: {
@@ -106,6 +113,7 @@ app.get("/api/jobs", async (req, res) => {
           score: true,
           skills: {
             select: {
+              id: true,
               name: true,
               group: true,
             },
@@ -116,15 +124,15 @@ app.get("/api/jobs", async (req, res) => {
   });
   // Get total job query
   const totalData = await prisma.jobs.count({
-    where: whereQuery
-  })
+    where: whereQuery,
+  });
 
   res.json({
     items: jobs,
     pagination: {
       total: totalData,
-      pageTotal: Math.trunc(totalData / size)
-    }
+      pageTotal: Math.trunc(totalData / size),
+    },
   });
 });
 

@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { prePos } from "../data/pre-pos";
 import { useNavigate } from "react-router-dom";
-import { ArrowDown } from "lucide-react"
+import { ArrowDown } from "lucide-react";
 
-const DataTable = ({ data }) => {
+const DataTable = ({ data, onLanguageSelected }) => {
   const navigate = useNavigate(); // useNavigate hook
 
   const groupskill = {
-    PROGRAMMING_LANG: "border-blue-200 bg-blue-100 text-blue-800",
-    FRAMEWORK: "border-purple-200 bg-purple-100 text-purple-800",
-    LIBRARY: "border-green-500 bg-green-100 text-green-800",
-    OTHER: "border-neutral-500 bg-neutral-100 text-neutral-800",
+    PROGRAMMING_LANG:
+      "border-blue-200 bg-blue-100 text-blue-800 duration-300 hover:bg-blue-300 text-blue-900",
+    FRAMEWORK:
+      "border-purple-200 bg-purple-100 text-purple-800 duration-300 hover:bg-purple-300 text-purple-900",
+    LIBRARY:
+      "border-green-500 bg-green-100 text-green-800 duration-300 hover:bg-green-300 text-purple-900",
+    OTHER:
+      "border-neutral-500 bg-neutral-100 text-neutral-800 duration-300 hover:bg-neutral-300 text-neutral-900",
   };
 
   return data.map((row, index) => {
@@ -45,14 +49,20 @@ const DataTable = ({ data }) => {
                   {row.skills
                     .slice(rowIndex * 5, rowIndex * 5 + 5)
                     .map(({ score, skills }, idx) => (
-                      <div
+                      <button
                         key={idx}
+                        onClick={() =>
+                          onLanguageSelected({
+                            id: skills.id,
+                            name: skills.name,
+                          })
+                        }
                         className={`${
                           groupskill[skills.group] ?? groupskill.OTHER
                         } border rounded-full text-sm py-1 px-3`}
                       >
                         {skills.name} ({score ?? 0}%)
-                      </div>
+                      </button>
                     ))}
                 </div>
               )
@@ -77,13 +87,22 @@ const DataTable = ({ data }) => {
   });
 };
 
-const MainTable = ({ currentPage, handlePageChange, data, trendingSort, onTrendingSortToggle }) => {
+const MainTable = ({
+  currentPage,
+  handlePageChange,
+  data,
+  trendingSort,
+  onTrendingSortToggle,
+  onLanguageSelected,
+}) => {
   const itemsPerPage = 11;
   const totalItems = prePos.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const currentData = prePos.slice(startIndex, endIndex);
+
+  const [name, setName] = useState("");
 
   return (
     <div className="w-full p-4 pr-8 overflow-x-auto">
@@ -104,13 +123,27 @@ const MainTable = ({ currentPage, handlePageChange, data, trendingSort, onTrendi
                   Position
                 </th>
                 <th className="border border-neutral-300 px-4 py-2 text-left font-light">
-                  Mostly Skills Requirement
+                  Mostly Skills Requirement{" "}
+                  {name && (
+                    <>
+                      <button className="text-green-600 font-bold ml-4">(Now Focus On: {name})</button>
+                      <button className="rounded-full border-red-500 bg-red-300 ml-2 px-2" onClick={() => {
+                        setName("")
+                        onLanguageSelected("")
+                      }}>Clear</button>
+                    </>
+                  )}
                 </th>
                 <th className="border border-neutral-300 px-4 py-2 text-center font-light relative">
                   <span>Trending</span>
-                  
+
                   {/* Trending sort */}
-                  <button onClick={() => onTrendingSortToggle()} className={`absolute right-3 top-3 duration-300 ${trendingSort === "desc" ? "rotate-180" : 'rotate-0'}`}>
+                  <button
+                    onClick={() => onTrendingSortToggle()}
+                    className={`absolute right-3 top-3 duration-300 ${
+                      trendingSort === "desc" ? "rotate-180" : "rotate-0"
+                    }`}
+                  >
                     <ArrowDown size={18} />
                   </button>
                 </th>
@@ -120,7 +153,13 @@ const MainTable = ({ currentPage, handlePageChange, data, trendingSort, onTrendi
               </tr>
             </thead>
             <tbody>
-              <DataTable data={data} />
+              <DataTable
+                data={data}
+                onLanguageSelected={({ id, name }) => {
+                  onLanguageSelected(id);
+                  setName(name);
+                }}
+              />
             </tbody>
           </table>
         </div>

@@ -19,8 +19,10 @@ function Position() {
   });
 
   // Pagination
-  const [page, setPage] = useState(0)
-  const [pageTotal, setPageTotal] = useState(0)
+  const [page, setPage] = useState(0);
+  const [pageTotal, setPageTotal] = useState(0);
+  // Select program language
+  const [selectedProgramLanguage, setSelectedProgramLanguage] = useState("");
 
   const handlePageChange = (page) => {
     setPage(page);
@@ -28,14 +30,17 @@ function Position() {
   };
   async function loadJobs() {
     const resp = await fetch(
-      `${import.meta.env.VITE_API_URL}/api/jobs?sortPos=${
-        filter.positionSort
-      }&sortTrending=${filter.trendingSort}&groupOfPos=${
-        filter.positionGroupIds
-      }&search=${filter.searchQuery}&page=${page}`
+      `${import.meta.env.VITE_API_URL}/api/jobs?${new URLSearchParams({
+        sortPos: filter.positionSort,
+        sortTrending: filter.trendingSort,
+        groupOfPos: filter.positionGroupIds,
+        search: filter.searchQuery,
+        language: selectedProgramLanguage,
+        page,
+      }).toString()}`
     );
     const js = await resp.json();
-    setPageTotal(js.pagination.pageTotal)
+    setPageTotal(js.pagination.pageTotal);
     // Reset data
     const result = [];
     for (const data of js.items ?? []) {
@@ -61,6 +66,10 @@ function Position() {
       void loadJobs();
     }
   }, [filter, page]);
+
+  useEffect(() => {
+    void loadJobs();
+  }, [selectedProgramLanguage]);
 
   return (
     <>
@@ -90,6 +99,9 @@ function Position() {
               data={data}
               currentPage={page}
               handlePageChange={handlePageChange}
+              onLanguageSelected={(val) => {
+                setSelectedProgramLanguage(val);
+              }}
             />
             {/* Pagination */}
             <Pagination
