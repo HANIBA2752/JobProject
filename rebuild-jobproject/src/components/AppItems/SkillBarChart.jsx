@@ -32,7 +32,7 @@ function SkillBarChart() {
         className="absolute right-0 top-1/2 transform -translate-y-1/2 -mr-14 pr-32 -mt-16"
         style={{ width: "55%", height: "350px" }}
       >
-        <ResponsiveContainer width="85%" height="110%">
+        <ResponsiveContainer width="84.9%" height="110%">
           <BarChart data={exampleSkills}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="name" />
