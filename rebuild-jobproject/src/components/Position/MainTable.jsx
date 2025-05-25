@@ -5,7 +5,7 @@ import { ArrowDown } from "lucide-react";
 import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css"; // Optional: Default Tippy styling
 
-const DataTable = ({ data, onLanguageSelected }) => {
+const DataTable = ({ data, onLanguageSelected, itemsPerPage, currentPage}) => {
   const navigate = useNavigate(); // useNavigate hook
 
   const groupskill = {
@@ -20,6 +20,8 @@ const DataTable = ({ data, onLanguageSelected }) => {
   };
 
   return data.map((row, index) => {
+    const rowNumber = currentPage * itemsPerPage + index + 1;
+
     let trendClass = "";
     switch (row.trending) {
       case "PEAK":
@@ -40,6 +42,7 @@ const DataTable = ({ data, onLanguageSelected }) => {
         key={row.id}
         className="dark:bg-neutral-800 dark:text-white dark:hover:bg-neutral-600 hover:bg-neutral-300 text-neutral-800 transition-all duration-200"
       >
+        <td className="text-center">{rowNumber}</td>
         <td
           className="border border-neutral-300 px-4 py-2 font-light cursor-pointer hover:underline"
           onClick={() => navigate(`/position-info/${row.id}`)}
@@ -55,9 +58,12 @@ const DataTable = ({ data, onLanguageSelected }) => {
                     .slice(rowIndex * 5, rowIndex * 5 + 5)
                     .map(({ score, skills }, idx) => (
                       <Tippy
-                        content={
-                          skills.group ?? "No description available"
-                        }
+                        content={skills.group ?? "No description available"}
+                        theme="custom"
+                        animation="shift-away"
+                        duration={[200, 150]}
+                        delay={[100, 50]}
+                        arrow={true}
                       >
                         <button
                           key={idx}
@@ -130,6 +136,9 @@ const MainTable = ({
                 </th>
               </tr>
               <tr className="dark:bg-neutral-900 dark:text-white text-neutral-800">
+                <th className="border border-neutral-300 px-[0.2px] py-2 font-bold text-center">
+                  No.
+                </th>
                 <th className="border border-neutral-300 px-4 py-2 text-left font-bold">
                   Position
                 </th>
@@ -178,6 +187,8 @@ const MainTable = ({
                   onLanguageSelected(id);
                   setName(name);
                 }}
+                currentPage={currentPage}
+                itemsPerPage={13}
               />
             </tbody>
           </table>

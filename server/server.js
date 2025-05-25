@@ -34,6 +34,7 @@ app.get("/api/jobs", async (req, res) => {
     .split(",") // ['0','1','2','3','4']
     .map((i) => Number(i)) //  [0,1,2,3,4]
     .filter((i) => i > 0); // [1,2,3,4]
+    
   const queryBase = {
     ...(groupIds.length > 0
       ? {
@@ -44,16 +45,19 @@ app.get("/api/jobs", async (req, res) => {
           },
         }
       : {}),
-    ...(language != ""
+    ...(language !== ""
       ? {
-          job_skills: {
-            some: {
-              skill_id: Number(language),
+          position: {
+            job_skills: {
+              some: {
+                skill_id: Number(language),
+              },
             },
           },
         }
       : {}),
   };
+
   const whereQuery = {
     ...(search != ""
       ? {
@@ -64,26 +68,28 @@ app.get("/api/jobs", async (req, res) => {
                   contains: search,
                 },
               },
-              ...queryBase,
             },
             {
-              job_skills: {
-                some: {
-                  skills: {
-                    name: {
-                      contains: `%${search}%`,
+              position: {
+                job_skills: {
+                  some: {
+                    skills: {
+                      name: {
+                        contains: search,
+                      },
                     },
                   },
                 },
               },
-              ...queryBase,
             },
           ],
+          ...queryBase,
         }
       : {
           ...queryBase,
         }),
   };
+
   const jobs = await prisma.jobs.findMany({
     skip: page * size, // you were skipping 0 before; now dynamic
     take: Number(size),
