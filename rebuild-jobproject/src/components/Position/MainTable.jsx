@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { prePos } from "../data/pre-pos";
 import { useNavigate } from "react-router-dom";
 import { ArrowDown } from "lucide-react";
+import Tippy from "@tippyjs/react";
+import "tippy.js/dist/tippy.css"; // Optional: Default Tippy styling
 
 const DataTable = ({ data, onLanguageSelected }) => {
   const navigate = useNavigate(); // useNavigate hook
@@ -52,20 +54,26 @@ const DataTable = ({ data, onLanguageSelected }) => {
                   {row.skills
                     .slice(rowIndex * 5, rowIndex * 5 + 5)
                     .map(({ score, skills }, idx) => (
-                      <button
-                        key={idx}
-                        onClick={() =>
-                          onLanguageSelected({
-                            id: skills.id,
-                            name: skills.name,
-                          })
+                      <Tippy
+                        content={
+                          skills.group ?? "No description available"
                         }
-                        className={`${
-                          groupskill[skills.group] ?? groupskill.OTHER
-                        } border rounded-full text-sm py-1 px-3`}
                       >
-                        {skills.name} ({score ?? 0}%)
-                      </button>
+                        <button
+                          key={idx}
+                          onClick={() =>
+                            onLanguageSelected({
+                              id: skills.id,
+                              name: skills.name,
+                            })
+                          }
+                          className={`${
+                            groupskill[skills.group] ?? groupskill.OTHER
+                          } border rounded-full text-sm py-1 px-3`}
+                        >
+                          {skills.name} ({score ?? 0}%)
+                        </button>
+                      </Tippy>
                     ))}
                 </div>
               )
