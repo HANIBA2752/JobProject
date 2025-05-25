@@ -95,8 +95,8 @@ function Filter({ onFilterUpdate }) {
         Position List
       </h3>
       <div className="space-y-3">
-        {positiongroup.map((i) => (
-          <div className="flex items-center space-x-2">
+        {positiongroup.map((i,index) => (
+          <div key={index} className="flex items-center space-x-2">
             <input
               type="checkbox"
               id={i.id}

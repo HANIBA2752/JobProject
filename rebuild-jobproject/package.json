@@ -32,6 +32,7 @@
     "react-router-dom": "^7.1.5",
     "react-simple-typewriter": "^5.0.1",
     "react-slick": "^0.30.3",
+    "recharts": "^2.15.3",
     "slick-carousel": "^1.8.1",
     "styled-components": "^6.1.14",
     "tailwind-merge": "^2.6.0",

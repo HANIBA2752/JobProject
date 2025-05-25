@@ -28,14 +28,12 @@ app.get("/api/jobs", async (req, res) => {
   } = req.query;
   if (size >= 100) size = 100;
   console.log(`Trending: ${sortTrending} | Group pos IDS: ${groupOfPos}`);
-
   // Transform data group
   // 0,1,2,3,4 => ['0','1','2','3','4'] => [0,1,2,3,4] => [1,2,3,4]
   const groupIds = groupOfPos // 0,1,2,3,4
     .split(",") // ['0','1','2','3','4']
     .map((i) => Number(i)) //  [0,1,2,3,4]
     .filter((i) => i > 0); // [1,2,3,4]
-
   const queryBase = {
     ...(groupIds.length > 0
       ? {
@@ -56,7 +54,6 @@ app.get("/api/jobs", async (req, res) => {
         }
       : {}),
   };
-
   const whereQuery = {
     ...(search != ""
       ? {
@@ -87,41 +84,48 @@ app.get("/api/jobs", async (req, res) => {
           ...queryBase,
         }),
   };
-
   const jobs = await prisma.jobs.findMany({
-    skip: page * size,
-    take: size,
+    skip: page * size, // you were skipping 0 before; now dynamic
+    take: Number(size),
+    where: whereQuery, // <-- this applies your filters
     orderBy: {
       trending: {
         level: sortTrending,
       },
     },
-    where: whereQuery,
     select: {
       id: true,
-      trending: { select: { name: true } },
+      description: true,
       created_at: true,
       updated_at: true,
-      description: true,
+      trending: {
+        select: { name: true },
+      },
       position: {
         select: {
-          name: "",
-        },
-      },
-      job_skills: {
-        select: {
-          score: true,
-          skills: {
+          id: true,
+          name: true,
+          group_id: true,
+          job_skills: {
             select: {
-              id: true,
-              name: true,
-              group: true,
+              job_id: true,
+              skill_id: true,
+              score: true,
+              skills: {
+                select: {
+                  id: true,
+                  name: true,
+                  group: true,
+                },
+              },
             },
           },
         },
       },
     },
   });
+
+  console.log(JSON.stringify(jobs, null, 2)); // Pretty print result
   // Get total job query
   const totalData = await prisma.jobs.count({
     where: whereQuery,
@@ -148,23 +152,30 @@ app.get("/api/jobs/:id", async (req, res) => {
         created_at: true,
         updated_at: true,
         description: true,
+        responsibilities: true,
         position: {
           select: {
+            id: true,
             name: true,
-          },
-        },
-        job_skills: {
-          select: {
-            score: true,
-            skills: {
+            group_id: true,
+            job_skills: {
               select: {
-                name: true,
+                job_id: true,
+                skill_id: true,
+                score: true,
+                skills: {
+                  select: {
+                    id: true,
+                    name: true,
+                  },
+                },
               },
             },
           },
         },
       },
     });
+    console.log(JSON.stringify(job, null, 2));
     if (!job) return res.status(404).json({ message: "Job not found" });
     res.json(job);
   } catch (error) {

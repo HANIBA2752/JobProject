@@ -48,10 +48,11 @@ function Position() {
         id: data.id,
         position: data.position.name,
         trending: data.trending.name,
-        skills: data.job_skills ?? [],
+        skills: data.position.job_skills ?? [],
       };
       result.push(transformed);
     }
+
     setData(result);
     // console.log(data, result)
   }

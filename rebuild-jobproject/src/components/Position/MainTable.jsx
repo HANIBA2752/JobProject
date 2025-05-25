@@ -38,7 +38,10 @@ const DataTable = ({ data, onLanguageSelected }) => {
         key={row.id}
         className="dark:bg-neutral-800 dark:text-white dark:hover:bg-neutral-600 hover:bg-neutral-300 text-neutral-800 transition-all duration-200"
       >
-        <td className="border border-neutral-300 px-4 py-2 font-light">
+        <td
+          className="border border-neutral-300 px-4 py-2 font-light cursor-pointer hover:underline"
+          onClick={() => navigate(`/position-info/${row.id}`)}
+        >
           {row.position}
         </td>
         <td className="border border-neutral-300 py-2 font-light">
@@ -74,14 +77,14 @@ const DataTable = ({ data, onLanguageSelected }) => {
             {row.trending}
           </span>
         </td>
-        <td className="border border-neutral-300 px-4 py-2 text-center font-light">
+        {/* <td className="border border-neutral-300 px-4 py-2 text-center font-light">
           <button
             className="bg-neutral-100 text-neutral-800 px-4 py-2 rounded-md hover:bg-neutral-300 hover:text-neutral-900 border border-neutral-400 transition-all duration-200"
             onClick={() => navigate(`/position-info/${row.id}`)}
           >
             Explore
           </button>
-        </td>
+        </td> */}
       </tr>
     );
   });
@@ -112,29 +115,37 @@ const MainTable = ({
             <thead className=" bg-neutral-200">
               <tr>
                 <th
-                  className="dark:bg-neutral-800 dark:text-white text-neutral-800 font-medium tracking-[5px] bg-neutral-100 py-2 px-6 text-left"
+                  className="dark:bg-neutral-800 dark:text-white text-neutral-800 font-bold tracking-[5px] bg-neutral-100 py-2 px-6 text-left "
                   colSpan="5"
                 >
                   Computer Engineering
                 </th>
               </tr>
               <tr className="dark:bg-neutral-900 dark:text-white text-neutral-800">
-                <th className="border border-neutral-300 px-4 py-2 text-left font-light">
+                <th className="border border-neutral-300 px-4 py-2 text-left font-bold">
                   Position
                 </th>
-                <th className="border border-neutral-300 px-4 py-2 text-left font-light">
+                <th className="border border-neutral-300 px-4 py-2 text-left font-bold">
                   Mostly Skills Requirement{" "}
                   {name && (
                     <>
-                      <button className="text-green-600 font-bold ml-4">(Now Focus On: {name})</button>
-                      <button className="rounded-full border-red-500 bg-red-300 ml-2 px-2" onClick={() => {
-                        setName("")
-                        onLanguageSelected("")
-                      }}>Clear</button>
+                      <span className="ml-4 inline-flex items-center gap-2 bg-green-100 text-green-800 border border-green-300 rounded-full px-3 py-1 text-sm font-medium shadow-sm">
+                        🎯 Focus: <span className="font-semibold">{name}</span>
+                        <button
+                          onClick={() => {
+                            setName("");
+                            onLanguageSelected("");
+                          }}
+                          className="ml-2 bg-red-500 text-white px-2 py-0.5 rounded-full hover:bg-red-600 transition-all duration-200 text-xs shadow"
+                          title="Clear Focus"
+                        >
+                          ✕
+                        </button>
+                      </span>
                     </>
                   )}
                 </th>
-                <th className="border border-neutral-300 px-4 py-2 text-center font-light relative">
+                <th className="border border-neutral-300 px-4 py-2 text-center font-bold relative">
                   <span>Trending</span>
 
                   {/* Trending sort */}
@@ -147,9 +158,9 @@ const MainTable = ({
                     <ArrowDown size={18} />
                   </button>
                 </th>
-                <th className="border border-neutral-300 px-4 py-2 text-center font-light">
+                {/* <th className="border border-neutral-300 px-4 py-2 text-center font-light">
                   Action
-                </th>
+                </th> */}
               </tr>
             </thead>
             <tbody>

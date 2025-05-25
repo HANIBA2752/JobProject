@@ -8,27 +8,27 @@ datasource db {
 }
 
 model job_skills {
-  id       Int     @unique(map: "job_id") @default(autoincrement())
+  id       Int       @unique(map: "job_id") @default(autoincrement())
   job_id   Int?
   skill_id Int?
-  score    Int?    @default(0)
-  skills   skills? @relation(fields: [skill_id], references: [id], onDelete: Cascade, map: "job_skills_ibfk_1")
-  jobs     jobs?   @relation(fields: [job_id], references: [id], onDelete: Cascade, map: "job_skills_jobs_FK")
+  score    Int?      @default(0)
+  skills   skills?   @relation(fields: [skill_id], references: [id], onDelete: Cascade, map: "job_skills_ibfk_1")
+  position position? @relation(fields: [job_id], references: [id], onDelete: Cascade, map: "job_skills_position_FK")
 
   @@index([job_id], map: "job_skills_jobs_FK")
   @@index([skill_id], map: "job_skills_skills_FK")
 }
 
 model jobs {
-  id             Int          @id @default(autoincrement())
-  created_at     DateTime     @default(now()) @db.DateTime(0)
-  updated_at     DateTime     @default(now()) @db.DateTime(0)
-  position_id    Int
-  trending_level Int
-  description    String?      @db.MediumText
-  job_skills     job_skills[]
-  position       position     @relation(fields: [position_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "jobs_ibfk_2")
-  trending       trending     @relation(fields: [trending_level], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "jobs_trending_FK")
+  id               Int      @id @default(autoincrement())
+  created_at       DateTime @default(now()) @db.DateTime(0)
+  updated_at       DateTime @default(now()) @db.DateTime(0)
+  position_id      Int
+  trending_level   Int
+  description      String?  @db.MediumText
+  responsibilities String?  @db.MediumText
+  position         position @relation(fields: [position_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "jobs_ibfk_2")
+  trending         trending @relation(fields: [trending_level], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "jobs_trending_FK")
 
   @@index([position_id], map: "position_id")
   @@index([trending_level], map: "jobs_trending_FK")
@@ -38,6 +38,7 @@ model position {
   id             Int             @id @unique(map: "id") @default(autoincrement())
   name           String          @db.VarChar(255)
   group_id       Int?
+  job_skills     job_skills[]
   jobs           jobs[]
   position_group position_group? @relation(fields: [group_id], references: [id], onDelete: Restrict, map: "position_position_group_FK")
 
@@ -70,5 +71,3 @@ enum skill_group {
   LIBRARY
   OTHER
 }
-
-
