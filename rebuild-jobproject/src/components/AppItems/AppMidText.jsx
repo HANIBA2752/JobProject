@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "animate.css";
 import ScreenImage2 from "../../assets/Chart4.png"; // นำเข้ารูปใหม่
+import SkillBarChart from "./SkillBarChart"
 
 function AppMidText() {
   return (
@@ -19,6 +20,7 @@ function AppMidText() {
                   insights.
                 </span>
               </div>
+              <SkillBarChart/>
               <div className="linkText mt-4">
                 <Link to="/position/comeng">
                   searching for computer engineer roles
