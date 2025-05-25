@@ -11,7 +11,6 @@ function PosDetail() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch job details
   const getDesJob = async () => {
     try {
       setLoading(true);
@@ -32,7 +31,6 @@ function PosDetail() {
     getDesJob();
   }, [id]);
 
-  // Handle loading and error states
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -91,14 +89,15 @@ function PosDetail() {
 
         <h3 className="text-2xl">Skills</h3>
         <div className="mt-2 flex flex-wrap gap-2">
-          {(desdata.job_skills ?? []).map((i, index) => (
+          {(desdata.position.job_skills ?? []).map((i, index) => (
             <a
+              key={index}
               className="bg-purple-600 text-white text-sm font-medium px-3 py-1 rounded-full shadow-md"
               href={`https://www.google.com/search?q=${i.skills.name}`}
               target="_blank"
               rel="noopener noreferrer"
             >
-              <span key={index}>{i.skills.name}</span>
+              <span>{i.skills.name}</span>
             </a>
           )) || "No skills listed."}
         </div>
@@ -112,11 +111,11 @@ function PosDetail() {
               width={500}
               height={500}
               data={{
-                labels: (desdata.job_skills ?? []).map((i) => i.skills.name),
+                labels: (desdata.position.job_skills ?? []).map((i) => i.skills.name),
                 datasets: [
                   {
                     label: "Skill Proficiency",
-                    data: (desdata.job_skills ?? []).map((i) => i.score),
+                    data: (desdata.position.job_skills ?? []).map((i) => i.score),
                     backgroundColor: "rgba(59, 130, 246, 0.2)",
                     borderColor: "rgba(59, 130, 246, 1)",
                     borderWidth: 2,
@@ -137,15 +136,15 @@ function PosDetail() {
                     max: 100,
                     ticks: {
                       stepSize: 20,
-                      color: "#4B5563", // Tailwind gray-600
+                      color: "#4B5563",
                       backdropColor: "transparent",
                       font: { size: 12 },
                     },
                     pointLabels: {
                       font: { size: 14, weight: "500" },
-                      color: "#111827", // Tailwind gray-900
+                      color: "#111827",
                     },
-                    grid: { color: "rgba(203, 213, 225, 0.4)" }, // gray-300 with transparency
+                    grid: { color: "rgba(203, 213, 225, 0.4)" },
                     angleLines: { color: "rgba(203, 213, 225, 0.4)" },
                   },
                 },
@@ -154,14 +153,14 @@ function PosDetail() {
                     position: "top",
                     labels: {
                       font: { size: 14 },
-                      color: "#111827", // gray-900
+                      color: "#111827",
                     },
                   },
                   tooltip: {
-                    backgroundColor: "#1E40AF", // blue-800
+                    backgroundColor: "#1E40AF",
                     titleFont: { weight: "bold" },
                     bodyFont: { size: 13 },
-                    borderColor: "#93C5FD", // blue-300
+                    borderColor: "#93C5FD",
                     borderWidth: 1,
                   },
                 },
@@ -169,6 +168,7 @@ function PosDetail() {
             />
           </div>
         </div>
+
         <p className="mt-4">
           {desdata.responsibilities || "No description available."}
         </p>
