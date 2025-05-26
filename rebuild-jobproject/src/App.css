@@ -11,7 +11,7 @@ body {
 /* https://images.pexels.com/photos/8534457/pexels-photo-8534457.jpeg */
 
 .section1 {
-  @apply h-screen w-screen bg-[url('../src/assets/backgroundMain2.jpg')] bg-no-repeat bg-cover bg-center overflow-hidden flex items-center;
+  @apply h-screen w-screen bg-no-repeat bg-cover bg-center overflow-hidden flex items-center;
   background-attachment: scroll;
   box-shadow: inset 7px -43px 47px -59px rgba(0,0,0,0.34);
 }

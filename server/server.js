@@ -34,7 +34,7 @@ app.get("/api/jobs", async (req, res) => {
     .split(",") // ['0','1','2','3','4']
     .map((i) => Number(i)) //  [0,1,2,3,4]
     .filter((i) => i > 0); // [1,2,3,4]
-    
+
   const queryBase = {
     ...(groupIds.length > 0
       ? {
@@ -90,7 +90,7 @@ app.get("/api/jobs", async (req, res) => {
         }),
   };
 
-  const jobs = await prisma.jobs.findMany({
+  const jobs = await prisma.position_details.findMany({
     skip: page * size, // you were skipping 0 before; now dynamic
     take: Number(size),
     where: whereQuery, // <-- this applies your filters
@@ -133,7 +133,7 @@ app.get("/api/jobs", async (req, res) => {
 
   console.log(JSON.stringify(jobs, null, 2)); // Pretty print result
   // Get total job query
-  const totalData = await prisma.jobs.count({
+  const totalData = await prisma.position_details.count({
     where: whereQuery,
   });
 
@@ -150,7 +150,7 @@ app.get("/api/jobs", async (req, res) => {
 app.get("/api/jobs/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    const job = await prisma.jobs.findUnique({
+    const job = await prisma.position_details.findUnique({
       where: { id: parseInt(id) },
       select: {
         id: true,
@@ -201,6 +201,25 @@ app.get("/api/query/position-group", async (req, res) => {
     select: { id: true, name: true },
   });
   res.json(result);
+});
+
+app.get("/api/query/mainpageScore", async (req, res) => {
+  const result = await prisma.job_skills.findMany({
+    select: {
+      score: true,
+      skills: {
+        select: {
+          name: true,
+        },
+      },
+    },
+  });
+  const transformed = result.map((item) => ({
+    skill: item.skills?.name ?? "Unknown", // เผื่อกรณี null
+    score: item.score,
+  }));
+
+  res.json(transformed);
 });
 
 const PORT = 5000;

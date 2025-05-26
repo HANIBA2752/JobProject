@@ -19,28 +19,13 @@ model job_skills {
   @@index([skill_id], map: "job_skills_skills_FK")
 }
 
-model jobs {
-  id               Int      @id @default(autoincrement())
-  created_at       DateTime @default(now()) @db.DateTime(0)
-  updated_at       DateTime @default(now()) @db.DateTime(0)
-  position_id      Int
-  trending_level   Int
-  description      String?  @db.MediumText
-  responsibilities String?  @db.MediumText
-  position         position @relation(fields: [position_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "jobs_ibfk_2")
-  trending         trending @relation(fields: [trending_level], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "jobs_trending_FK")
-
-  @@index([position_id], map: "position_id")
-  @@index([trending_level], map: "jobs_trending_FK")
-}
-
 model position {
-  id             Int             @id @unique(map: "id") @default(autoincrement())
-  name           String          @db.VarChar(255)
-  group_id       Int?
-  job_skills     job_skills[]
-  jobs           jobs[]
-  position_group position_group? @relation(fields: [group_id], references: [id], onDelete: Restrict, map: "position_position_group_FK")
+  id               Int                @id @unique(map: "id") @default(autoincrement())
+  name             String             @db.VarChar(255)
+  group_id         Int
+  job_skills       job_skills[]
+  position_group   position_group     @relation(fields: [group_id], references: [id], map: "position_position_group_FK")
+  position_details position_details[]
 
   @@index([group_id], map: "position_position_group_FK")
 }
@@ -53,16 +38,31 @@ model skills {
 }
 
 model trending {
-  id    Int    @id @default(autoincrement())
-  name  String @db.VarChar(100)
-  level Int    @default(0)
-  jobs  jobs[]
+  id               Int                @id @default(autoincrement())
+  name             String             @db.VarChar(100)
+  level            Int                @default(0)
+  position_details position_details[]
 }
 
 model position_group {
   id       Int        @id @default(autoincrement())
   name     String     @db.VarChar(255)
   position position[]
+}
+
+model position_details {
+  id               Int      @id @default(autoincrement())
+  created_at       DateTime @default(now()) @db.DateTime(0)
+  updated_at       DateTime @default(now()) @db.DateTime(0)
+  position_id      Int
+  trending_level   Int
+  description      String?  @db.MediumText
+  responsibilities String?  @db.MediumText
+  trending         trending @relation(fields: [trending_level], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "jobs_trending_FK")
+  position         position @relation(fields: [position_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "position_details_ibfk_2")
+
+  @@index([trending_level], map: "jobs_trending_FK")
+  @@index([position_id], map: "position_id")
 }
 
 enum skill_group {
