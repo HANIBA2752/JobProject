@@ -74,7 +74,7 @@ function Position() {
 
   return (
     <>
-      <div className="w-screen h-screen bg-[url('../src/assets/backgroundMain2.jpg')] flex justify-center">
+      <div className="w-screen h-screen flex justify-center">
         <div className="w-[90%] h-auto dark:bg-neutral-700 bg-neutral-100 flex flex-col md:flex-row mt-[70px] mb-[20px] md:mt-[80px] md:mb-[60px] rounded-xl">
           {/* Sidebar Filter */}
           <Filter
