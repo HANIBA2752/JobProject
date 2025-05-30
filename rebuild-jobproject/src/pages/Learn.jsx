@@ -23,10 +23,15 @@ function Learn() {
   const filteredData = useMemo(() => {
     return learnData.filter(
       (item) =>
-        (item.Description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          item.index.toLowerCase().includes(searchTerm.toLowerCase())) &&
-        (selectedTags.length === 0 ||
-          selectedTags.some((tag) => item.tags.includes(tag)))
+        (
+          item.Description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          item.index.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          item.tags.some((i) => i.toLowerCase().includes(searchTerm.toLowerCase()))
+        ) &&
+        (
+          selectedTags.length === 0 ||
+          selectedTags.some((tag) => item.tags.includes(tag)
+        ))
     );
   }, [searchTerm, selectedTags]);
 
