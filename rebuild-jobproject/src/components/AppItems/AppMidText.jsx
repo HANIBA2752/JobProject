@@ -1,13 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "animate.css";
-import ScreenImage2 from "../../assets/Chart4.png"; // นำเข้ารูปใหม่
+import ScreenImage2 from "../../assets/Chart4.png";
 import SkillBarChart from "./SkillBarChart";
 
 function AppMidText() {
   return (
     <>
-      <section className="section1 relative bg-[url('../src/assets/backgroundMain2.jpg')]">
+      <section className="section1 relative bg-[url('../src/assets/backgroundMain2.jpg')] dark:bg-[url('../src/assets/backgroundMain3.jpg')] transition-all duration-500 ease-in-out">
         <div className="App-topic">
           <div className="AppMidText-container">
             <div>

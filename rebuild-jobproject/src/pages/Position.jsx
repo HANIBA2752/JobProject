@@ -75,7 +75,7 @@ function Position() {
   return (
     <>
       <div className="w-screen h-screen flex justify-center">
-        <div className="w-[90%] h-auto dark:bg-neutral-700 bg-neutral-100 flex flex-col md:flex-row mt-[70px] mb-[20px] md:mt-[80px] md:mb-[60px] rounded-xl">
+        <div className="w-[90%] h-auto bg-white dark:bg-stone-900 flex flex-col md:flex-row mt-[70px] mb-[20px] md:mt-[80px] md:mb-[60px] rounded-xl shadow-lg">
           {/* Sidebar Filter */}
           <Filter
             onFilterUpdate={(data) => {

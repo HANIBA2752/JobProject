@@ -39,9 +39,9 @@
 }
 
 .desc-bg{
-    @apply flex justify-center items-center h-20 bg-[url('https://images.pexels.com/photos/134054/pexels-photo-134054.jpeg')] bg-cover bg-bottom bg-no-repeat overflow-hidden;
+    @apply flex justify-center items-center h-20 bg-[url('../src/assets/descapppic.jpg')] dark:bg-[url('../src/assets/descapppic2.jpg')] bg-cover bg-bottom bg-no-repeat overflow-hidden;
     transition: all ease-in-out;
-}   
+} 
 
 .desc-bg span{
     @apply text-xs text-center md:text-xl text-neutral-500/80;

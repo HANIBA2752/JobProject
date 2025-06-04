@@ -2,11 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
-*{
+* {
     @apply font-Ysabeau-SC
 }
+
 .learn-container {
-    @apply dark:bg-neutral-900 bg-gray-50 min-h-screen pt-10 mt-[30px] md:mt-[50px];
+    @apply bg-gradient-to-br from-neutral-50 to-neutral-100 
+    dark:from-neutral-950 dark:to-neutral-900 
+    min-h-screen pt-10 mt-[30px] md:mt-[50px]
+    transition-colors duration-500;
 }
 
 .header-section {
@@ -14,7 +18,76 @@
 }
 
 .subtitle {
-    @apply opacity-70;
+    @apply opacity-80 dark:opacity-90;
 }
 
-/* Additional custom styles can be added here if needed */
+/* Enhanced search bar styling */
+.search-bar {
+    @apply bg-white/90 dark:bg-neutral-800/90 
+    backdrop-blur-md border border-neutral-200/50 dark:border-neutral-700/50
+    hover:shadow-lg dark:hover:shadow-neutral-900/30
+    transition-all duration-300;
+}
+
+.search-bar input {
+    @apply placeholder:text-neutral-400 dark:placeholder:text-neutral-400;
+}
+
+.search-bar input:focus {
+    @apply outline-none ring-2 ring-neutral-300/50 dark:ring-neutral-600/50;
+}
+
+/* Tag filter enhancements */
+.tag-filters button {
+    @apply hover:shadow-md dark:hover:shadow-neutral-900/30
+    border border-transparent
+    hover:border-neutral-300 dark:hover:border-neutral-600;
+}
+
+/* Card container improvements */
+.item-container {
+    @apply relative;
+}
+
+.item-container::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-t 
+    from-transparent via-transparent to-white/20 
+    dark:to-neutral-950/20 pointer-events-none;
+}
+
+/* Scrollbar styling for dark mode */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(148 163 184) transparent;
+}
+
+*::-webkit-scrollbar {
+    width: 6px;
+}
+
+*::-webkit-scrollbar-track {
+    @apply bg-transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+    @apply bg-neutral-300 dark:bg-neutral-600 rounded-full;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    @apply bg-neutral-400 dark:bg-neutral-500;
+}
+
+/* Custom focus styles for better accessibility */
+.focus-visible {
+    @apply outline-none ring-2 ring-blue-500 dark:ring-blue-400 ring-offset-2 
+    dark:ring-offset-neutral-900;
+}
+
+/* Enhanced no results message */
+.no-results {
+    @apply text-neutral-500 dark:text-neutral-400 
+    bg-white/50 dark:bg-neutral-800/50 
+    rounded-xl p-8 backdrop-blur-sm
+    border border-neutral-200 dark:border-neutral-700;
+}

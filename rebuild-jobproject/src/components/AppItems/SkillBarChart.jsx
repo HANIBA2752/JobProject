@@ -10,23 +10,20 @@ import {
   Cell,
 } from "recharts";
 
-const colors = ["#ceabd6", "#d3b6db", "#d9c2e1", "#decfe6", "#e4dbec", "#e9e7f1"];
-const hoverColor = "#b076c7";
+const colors = ["#f59e0b", "#fcb6cf", "#3b82f6", "#8b5cf6", "#ef4444", "#06b6d4"];
+const darkColors = ["#f59e0b", "#fcb6cf", "#3b82f6", "#8b5cf6", "#ef4444", "#06b6d4"];
+const hoverColor = "#333";
+const darkHoverColor = "#fff";
 
 function CustomTooltip({ active, payload, label }) {
   if (active && payload && payload.length) {
     return (
       <div
-        style={{
-          backgroundColor: "#fff",
-          border: "1px solid #ccc",
-          padding: "10px",
-          borderRadius: "8px",
-        }}
+        className="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 p-2.5 rounded-lg shadow-lg"
       >
-        <p style={{ margin: 0, fontWeight: "bold" }}>{label}</p>
-        <p style={{ margin: 0 }}>
-          <span style={{ color: "#8884d8" }}>Skill Trending: </span>
+        <p className="m-0 font-bold text-gray-900 dark:text-white">{label}</p>
+        <p className="m-0 text-gray-700 dark:text-gray-300">
+          <span className="text-blue-500 dark:text-blue-400">Skill Trending: </span>
           {payload[0].value}%
         </p>
       </div>
@@ -39,8 +36,23 @@ function CustomTooltip({ active, payload, label }) {
 function SkillBarChart() {
   const [skills, setSkills] = useState([]);
   const [activeIndex, setActiveIndex] = useState(-1);
+  const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
+    // Check for dark mode
+    const checkDarkMode = () => {
+      setIsDark(document.documentElement.classList.contains('dark'));
+    };
+    
+    checkDarkMode();
+    
+    // Watch for dark mode changes
+    const observer = new MutationObserver(checkDarkMode);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class']
+    });
+
     const fetchSkills = async () => {
       try {
         const res = await fetch(
@@ -54,7 +66,12 @@ function SkillBarChart() {
     };
 
     fetchSkills();
+
+    return () => observer.disconnect();
   }, []);
+
+  const currentColors = isDark ? darkColors : colors;
+  const currentHoverColor = isDark ? darkHoverColor : hoverColor;
 
   return (
     <div
@@ -76,16 +93,25 @@ function SkillBarChart() {
             margin={{ top: 20, right: 30, left: 10, bottom: 20 }}
             onMouseLeave={() => setActiveIndex(-1)}
           >
-            <CartesianGrid strokeDasharray="4 4" stroke="#f0f0f0" />
+            <CartesianGrid 
+              strokeDasharray="4 4" 
+              stroke={isDark ? "#6b7280" : "#f0f0f0"} 
+            />
             <XAxis
               dataKey="skill"
-              tick={{ fill: "#6b6b6b", fontSize: 12 }}
-              axisLine={{ stroke: "#ccc" }}
+              tick={{ 
+                fill: isDark ? "#f3f4f6" : "#6b6b6b", 
+                fontSize: 12 
+              }}
+              axisLine={{ stroke: isDark ? "#9ca3af" : "#ccc" }}
               tickLine={false}
             />
             <YAxis
-              tick={{ fill: "#6b6b6b", fontSize: 12 }}
-              axisLine={{ stroke: "#ccc" }}
+              tick={{ 
+                fill: isDark ? "#f3f4f6" : "#6b6b6b", 
+                fontSize: 12 
+              }}
+              axisLine={{ stroke: isDark ? "#9ca3af" : "#ccc" }}
               tickLine={false}
             />
             <Tooltip content={<CustomTooltip />} />
@@ -98,7 +124,7 @@ function SkillBarChart() {
               {skills.map((_, index) => (
                 <Cell
                   key={`cell-${index}`}
-                  fill={activeIndex === index ? hoverColor : colors[index % colors.length]}
+                  fill={activeIndex === index ? currentHoverColor : currentColors[index % currentColors.length]}
                   style={{
                     transition: "transform 0.2s",
                     transform: activeIndex === index ? "scale(1.05)" : "scale(1)",

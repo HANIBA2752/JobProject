@@ -6,71 +6,172 @@ body {
   overflow-x: hidden;
 }
 
-/* dark : https://images.pexels.com/photos/633409/pexels-photo-633409.jpeg */
-/* 1: https://images.pexels.com/photos/5712576/pexels-photo-5712576.jpeg */
-/* https://images.pexels.com/photos/8534457/pexels-photo-8534457.jpeg */
-
+/* Enhanced responsive section styling */
 .section1 {
   @apply h-screen w-screen bg-no-repeat bg-cover bg-center overflow-hidden flex items-center;
+  @apply dark:bg-gray-900;
   background-attachment: scroll;
   box-shadow: inset 7px -43px 47px -59px rgba(0,0,0,0.34);
+  
+  /* Better background positioning for mobile */
+  @screen sm {
+    background-position: center center;
+  }
+  
+  @screen lg {
+    background-position: center center;
+  }
 }
 
 .section2 {
-  @apply bg-gradient-to-b from-[#e3e6e9] via-[#e9ecef] to-[#f6f6f6]  w-full pb-[50px];
+  @apply bg-gradient-to-b from-[#e3e6e9] via-[#e9ecef] to-[#f6f6f6] w-full pb-[50px];
+  @apply dark:bg-gradient-to-b dark:from-zinc-900 dark:to-zinc-800;
   box-shadow: inset 7px 43px 47px -59px rgba(0,0,0,0.34);
 }
-
-/* .section3 {
-  @apply bg-gradient-to-b from-[#141414] via-[#030303] to-[#060606] w-full;
-} */
 
 .topic-animate {
   animation: slideInLeft 2s;
 }
 
-.AppMidText-container{
-  @apply w-screen;
+.AppMidText-container {
+  @apply w-screen px-4 sm:px-6 lg:px-8;
 }
 
+/* Enhanced responsive typography and layout */
 .web-topic {
-  @apply text-neutral-500 flex flex-col items-center justify-center landscape:mt-16 leading-[50px] md:block md:ml-20 md:-mt-52;
-  @apply xl:-mt-60 xl:ml-40;
+  @apply text-neutral-500 flex flex-col items-center justify-center text-center;
+  @apply sm:items-center sm:text-center;
+  @apply md:items-start md:text-left md:ml-8 lg:ml-16 xl:ml-20 2xl:ml-40;
+  @apply landscape:mt-8 sm:landscape:mt-12 md:landscape:mt-0;
+  @apply md:-mt-32 lg:-mt-48 xl:-mt-52 2xl:-mt-60;
+  @apply dark:text-neutral-300;
   font-family: 'Ubuntu', sans-serif;
 }
 
+/* Responsive typography scaling */
 .topicText {
-  @apply text-[50px] font-light mb-1 md:text-[60px] xl:text-[100px] xl:leading-[120px];
+  @apply font-light mb-1 leading-tight;
+  @apply text-[32px] sm:text-[40px] md:text-[50px] lg:text-[60px] xl:text-[80px] 2xl:text-[100px];
+  @apply sm:leading-[40px] md:leading-[50px] lg:leading-[70px] xl:leading-[90px] 2xl:leading-[120px];
+  @apply dark:text-white;
 }
 
-.subText{
-    @apply text-sm font-extralight w-[60%] text-center md:text-left md:w-[35%];
-    @apply xl:text-lg xl:w-[30%];
-    font-family: 'Kanit', sans-serif;
+/* Enhanced responsive subtitle */
+.subText {
+  @apply font-extralight text-center;
+  @apply text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl;
+  @apply w-[85%] sm:w-[70%] md:w-[60%] lg:w-[45%] xl:w-[35%] 2xl:w-[30%];
+  @apply md:text-left;
+  @apply dark:text-neutral-300;
+  font-family: 'Kanit', sans-serif;
+  line-height: 1.5;
 }
 
-.subText span{
-    @apply text-neutral-800 font-light;
+.subText span {
+  @apply text-neutral-800 font-light;
+  @apply dark:text-neutral-100;
 }
 
-.linkText{
-    @apply text-base inline-block cursor-pointer duration-500 font-light text-neutral-50 underline-offset-[2px] mt-3 sm:landscape:text-black sm:landscape:bg-white/60 sm:landscape:rounded-2xl sm:landscape:px-3 sm:text-center;
+/* Enhanced responsive link styling */
+.linkText {
+  @apply inline-block cursor-pointer duration-500 font-light underline-offset-[2px] mt-3;
+  @apply text-sm sm:text-base lg:text-lg;
+  @apply text-neutral-50 text-center;
+  @apply sm:landscape:text-black sm:landscape:bg-white/60 sm:landscape:rounded-2xl sm:landscape:px-3 sm:landscape:py-2;
+  @apply md:text-left;
+  @apply dark:text-neutral-200 dark:sm:landscape:text-white dark:sm:landscape:bg-black/60;
+  
+  /* Better mobile touch targets */
+  @apply py-2 px-1 sm:py-1 sm:px-0;
 }
 
-.linkText:hover{
-    @apply text-white underline sm:landscape:text-neutral-800;
-    filter: drop-shadow(2px 2px 10px #999999);
+.linkText:hover {
+  @apply text-white underline;
+  @apply sm:landscape:text-neutral-800;
+  @apply dark:text-neutral-100 dark:sm:landscape:text-neutral-200;
+  filter: drop-shadow(2px 2px 10px #999999);
+  transform: translateY(-1px);
 }
 
-.advice h2{
-  font-family: 'Kanit',sans-serif;
-  @apply font-light;
+/* Responsive advice section */
+.advice h2 {
+  font-family: 'Kanit', sans-serif;
+  @apply font-light text-lg sm:text-xl md:text-2xl lg:text-3xl;
 }
+
+/* Enhanced footer responsiveness */
 footer {
-  @apply bg-[#f3f3f3] w-full h-auto py-8 px-4 text-center flex justify-center items-center text-white;
+  @apply bg-[#f3f3f3] w-full h-auto py-6 sm:py-8 px-4 sm:px-6 lg:px-8;
+  @apply text-center flex justify-center items-center text-white;
+  @apply text-sm sm:text-base;
+  @apply dark:bg-neutral-800;
   font-family: 'Kanit', sans-serif;
 }
 
+/* Responsive utilities for better mobile experience */
+@media (max-width: 640px) {
+  .section1 {
+    min-height: 100vh;
+    min-height: 100svh; /* Better mobile viewport support */
+  }
+  
+  .web-topic {
+    padding: 1rem;
+  }
+}
+
+/* Tablet landscape adjustments */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  .web-topic {
+    @apply -mt-20;
+  }
+  
+  .topicText {
+    @apply text-[55px] leading-[60px];
+  }
+}
+
+/* Large screen optimizations */
+@media (min-width: 1920px) {
+  .web-topic {
+    @apply ml-60 -mt-80;
+  }
+  
+  .topicText {
+    @apply text-[120px] leading-[140px];
+  }
+  
+  .subText {
+    @apply text-2xl w-[25%];
+  }
+}
+
+/* High DPI display adjustments */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .section1 {
+    background-attachment: scroll; /* Better performance on high DPI */
+  }
+}
+
+/* Improved focus states for accessibility */
+.linkText:focus {
+  @apply outline-none ring-2 ring-white ring-opacity-50 rounded;
+}
+
+/* Better animation performance */
+@media (prefers-reduced-motion: no-preference) {
+  .topic-animate {
+    animation: slideInLeft 2s ease-out;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .topic-animate {
+    animation: none;
+  }
+}
+
+/* Existing layer styles preserved */
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -99,6 +200,7 @@ footer {
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
   }
+  
   .dark {
     --background: 0 0% 3.9%;
     --foreground: 0 0% 98%;
@@ -126,6 +228,7 @@ footer {
     --chart-5: 340 75% 55%;
   }
 }
+
 @layer base {
   * {
     @apply border-border;

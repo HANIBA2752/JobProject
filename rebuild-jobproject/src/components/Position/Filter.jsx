@@ -46,8 +46,8 @@ function Filter({ onFilterUpdate }) {
   }, [positionSort, query, positionGroupIds]);
 
   return (
-    <div className="dark:bg-neutral-800 w-full md:w-[20%] bg-neutral-100 p-4 md:h-auto flex flex-col space-y-4 rounded-l-md shadow-md">
-      <h2 className="dark:text-white text-neutral-800 font-semibold mb-2">
+    <div className="bg-white dark:bg-stone-800 w-full md:w-[20%] p-4 md:h-auto flex flex-col space-y-4 rounded-l-lg shadow-sm border-r border-stone-200 dark:border-stone-700">
+      <h2 className="text-stone-900 dark:text-stone-100 font-semibold mb-2 text-lg">
         Filters
       </h2>
 
@@ -57,33 +57,39 @@ function Filter({ onFilterUpdate }) {
           <input
             type="text"
             placeholder="Search..."
-            className="w-full py-2 px-4 pr-10 rounded-full border"
+            className="w-full py-2 px-4 pr-10 rounded-lg border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 placeholder-stone-500 dark:placeholder-stone-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
             onChange={(e) => setQuery(e.target.value)}
           />
-          <button className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-black">
+          <button className="absolute right-3 top-1/2 transform -translate-y-1/2 text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 transition-colors">
             <Search size={20} />
           </button>
         </div>
       </div>
 
       {/* Checkbox Filter */}
-      <h3 className="dark:text-white text-neutral-600 text-sm font-medium mb-2">
-        Position List
-      </h3>
       <div className="space-y-3">
-        {positiongroup.map((i, index) => (
-          <div key={index} className="flex items-center space-x-2">
-            <input
-              type="checkbox"
-              id={i.id}
-              onChange={updatePositionGroupQuery}
-              checked={positionGroupIds.includes(i.id.toString())}
-            />
-            <label htmlFor={i.id} className="text-sm text-neutral-700">
-              {i.name}
-            </label>
-          </div>
-        ))}
+        <h3 className="text-stone-700 dark:text-stone-300 text-sm font-medium mb-3">
+          Position List
+        </h3>
+        <div className="space-y-3 max-h-96 overflow-y-auto">
+          {positiongroup.map((i, index) => (
+            <div key={index} className="flex items-center space-x-3">
+              <input
+                type="checkbox"
+                id={i.id}
+                onChange={updatePositionGroupQuery}
+                checked={positionGroupIds.includes(i.id.toString())}
+                className="w-4 h-4 text-blue-600 bg-stone-100 dark:bg-stone-700 border-stone-300 dark:border-stone-600 rounded focus:ring-blue-500 dark:focus:ring-blue-600 focus:ring-2"
+              />
+              <label
+                htmlFor={i.id}
+                className="text-sm text-stone-700 dark:text-stone-300 cursor-pointer hover:text-stone-900 dark:hover:text-stone-100 transition-colors"
+              >
+                {i.name}
+              </label>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

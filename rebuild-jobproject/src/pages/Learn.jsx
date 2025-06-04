@@ -51,14 +51,17 @@ function Learn() {
         className="header-section text-center"
       >
         <h1
-          className="title text-4xl md:text-6xl font-bold"
-          style={{ color: "#4f4f4f" }}
+          className="title text-4xl md:text-6xl font-bold 
+          text-neutral-800 dark:text-slate-100 
+          bg-gradient-to-r from-neutral-700 to-neutral-900 
+          dark:from-slate-200 dark:to-slate-100 
+          bg-clip-text text-transparent"
         >
           Unlock Your Learning Potential
         </h1>
         <p
-          className="subtitle text-xl text-gray-600 dark:text-gray-300 mb-8 mt-4"
-          style={{ color: "rgba(0, 0, 0, 0.9)" }}
+          className="subtitle text-xl text-neutral-600 dark:text-slate-300 
+          mb-8 mt-4 max-w-2xl mx-auto leading-relaxed"
         >
           Discover the Best Online Learning Platforms
         </p>
@@ -67,7 +70,7 @@ function Learn() {
       {/* Search Section */}
       <div className="search-filter-container max-w-5xl mx-auto px-4">
         <div
-          className="search-bar flex items-center bg-white dark:bg-neutral-700 rounded-full shadow-md mb-6"
+          className="search-bar flex items-center rounded-full shadow-md mb-6"
           style={{
             borderLeft: "4px solid #7f7f7f",
             borderRadius: "0 25px 25px 0",
@@ -78,10 +81,15 @@ function Learn() {
             placeholder="Search learning resources..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="flex-grow p-3 rounded-full bg-transparent outline-none text-gray-700 dark:text-white"
+            className="flex-grow p-3 rounded-full bg-transparent outline-none 
+            text-neutral-700 dark:text-slate-100 font-medium"
           />
           <button
-            className="px-6 py-3 rounded-full transition duration-300"
+            className="px-6 py-3 rounded-full transition-all duration-300
+            hover:shadow-lg dark:hover:shadow-slate-900/50
+            active:scale-95 focus:ring-2 focus:ring-offset-2 
+            dark:focus:ring-offset-slate-800 focus:ring-neutral-500
+            font-medium"
             style={{
               backgroundColor: "#7f7f7f",
               color: "white",
@@ -101,11 +109,14 @@ function Learn() {
               <button
                 key={tag}
                 onClick={() => toggleTag(tag)}
-                className="px-3 py-1 rounded-full text-sm font-medium transition duration-300"
+                className="px-3 py-1 rounded-full text-sm font-medium 
+                transition-all duration-300 hover:scale-105 active:scale-95
+                focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-slate-900"
                 style={{
-                  backgroundColor: isSelected ? bg : "rgba(127, 127, 127, 0.3)",
+                  backgroundColor: isSelected ? bg : "rgba(127, 127, 127, 0.15)",
                   color: isSelected ? text : "#6f6f6f",
-                  border: isSelected ? `1px solid ${text}` : "none",
+                  border: isSelected ? `1px solid ${text}` : 
+                    "1px solid rgba(127, 127, 127, 0.2)",
                 }}
               >
                 {tag}
@@ -120,7 +131,8 @@ function Learn() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.2 }}
-        className="item-container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6 max-w-7xl mx-auto"
+        className="item-container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 
+        lg:grid-cols-4 gap-6 p-6 max-w-7xl mx-auto"
       >
         {filteredData.length > 0 ? (
           filteredData.map((item) => (
@@ -134,11 +146,14 @@ function Learn() {
             />
           ))
         ) : (
-          <div
-            className="col-span-full text-center text-gray-500 dark:text-gray-300"
-            style={{ color: "#7f7f7f" }}
-          >
-            No resources found. Try a different search or filter.
+          <div className="col-span-full text-center no-results">
+            <div className="text-2xl mb-2">🔍</div>
+            <h3 className="text-lg font-semibold mb-2 text-neutral-700 dark:text-slate-300">
+              No resources found
+            </h3>
+            <p className="text-neutral-500 dark:text-slate-400">
+              Try a different search term or remove some filters
+            </p>
           </div>
         )}
       </motion.div>
